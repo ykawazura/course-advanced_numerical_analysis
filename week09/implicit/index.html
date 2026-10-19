@@ -3587,7 +3587,7 @@
 <div class="arithmatex">\[
 a_i = -r,\qquad b_i = 1+2r,\qquad c_i = -r,\qquad d_i = u_i^n
 \]</div>
-<p>である。<span class="arithmatex">\(r&gt;0\)</span> なら <span class="arithmatex">\(\lvert b_i\rvert = 1+2r &gt; \lvert a_i\rvert+\lvert c_i\rvert = 2r\)</span>、すなわち<strong>狭義優対角</strong>なので、トーマス法はピボット選択なしで安定に動く。第7回で書いた <code>thomas()</code> を1行も変えずに再利用できる。</p>
+<p>である。<span class="arithmatex">\(r&gt;0\)</span> なら <span class="arithmatex">\(\lvert b_i\rvert = 1+2r &gt; \lvert a_i\rvert+\lvert c_i\rvert = 2r\)</span>、すなわち<strong>狭義対角優位</strong>なので、トーマス法はピボット選択なしで安定に動く。第7回で書いた <code>thomas()</code> を1行も変えずに再利用できる。</p>
 <p><strong>安定性</strong>はどうか。最短波長の成分 <span class="arithmatex">\(u_i^n=(-1)^iG^n\)</span> を代入すると <span class="arithmatex">\(u_{i-1}^{n+1}+u_{i+1}^{n+1}=-2u_i^{n+1}\)</span> だから</p>
 <div class="arithmatex">\[
 G = \frac{1}{1+4r}

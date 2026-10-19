@@ -3655,7 +3655,7 @@ u^{n+1}_{ij} - r\,L u^{n+1}\big|_{ij} = u^n_{ij}
 \underbrace{(N-1)\ \text{本}}_{j=1,\dots,N-1}\ \times\ \underbrace{(N-1)\ \text{元の三重対角系}}_{i=1,\dots,N-1}
 \]</div>
 <p>に分解される。第2半ステップは <span class="arithmatex">\(i\)</span> を固定して <span class="arithmatex">\(j\)</span> 方向に同じことをする。<span class="arithmatex">\(N=20\)</span> なら「19 元の三重対角系を 19 本」を2回、1ステップあたり合計 38 本解けばよい。</p>
-<p>係数行列 <span class="arithmatex">\(\mathrm{tridiag}(-\mu,\,1+2\mu,\,-\mu)\)</span> は <span class="arithmatex">\(1+2\mu&gt;2\mu=\lvert-\mu\rvert+\lvert-\mu\rvert\)</span> なので<strong>狭義優対角</strong>であり、<a href="../../week07/finite-difference/#thomas">第7回のトーマス法</a>がピボット交換なしにそのまま使える。<span class="arithmatex">\(\mu\)</span> がどれだけ大きくても優対角性は崩れない。1次元で作った道具が、2次元の問題にそのまま効くわけである。</p>
+<p>係数行列 <span class="arithmatex">\(\mathrm{tridiag}(-\mu,\,1+2\mu,\,-\mu)\)</span> は <span class="arithmatex">\(1+2\mu&gt;2\mu=\lvert-\mu\rvert+\lvert-\mu\rvert\)</span> なので<strong>狭義対角優位</strong>であり、<a href="../../week07/finite-difference/#thomas">第7回のトーマス法</a>がピボット交換なしにそのまま使える。<span class="arithmatex">\(\mu\)</span> がどれだけ大きくても優対角性は崩れない。1次元で作った道具が、2次元の問題にそのまま効くわけである。</p>
 <figure>
   <img alt="ADI の2つの半ステップ" src="../img/adi_sweep.png" width="820" />
 <br />

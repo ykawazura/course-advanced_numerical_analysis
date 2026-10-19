@@ -3840,7 +3840,7 @@ a = 1 - \frac{h^2}{2} + \frac{h^4}{24}, \quad b = h - \frac{h^3}{6}
 <p>実行:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python3<span class="w"> </span>plot_oscillator.py
 </code></pre></div>
-<p>オイラー法の軌道は単位円の外へ渦を巻き、エネルギーが単調に増えていく。RK4 の軌道は目で見る限り円に重なり、<span class="arithmatex">\(E\)</span> もこの縮尺では水平線にしか見えない。しかし実際には <span class="arithmatex">\(t=20\)</span> で <span class="arithmatex">\(E=0.499956\)</span> とわずかに減っている（<code>print(E_rk4[-1])</code> で確かめられる）——<strong>精度が高くても保存量が保たれるわけではない</strong>。</p>
+<p>オイラー法の軌道は単位円の外へ渦を巻き、エネルギーが単調に増えていく。RK4 の軌道は目で見る限り円に重なり、<span class="arithmatex">\(E\)</span> もこの縮尺では水平線にしか見えない。しかし実際には <span class="arithmatex">\(t=20\)</span> で <span class="arithmatex">\(E=0.4999986\)</span> とわずかに減っている（<code>print(E_rk4[-1])</code> で確かめられる）——<strong>精度が高くても保存量が保たれるわけではない</strong>。</p>
 <h2 id="_4">利点と欠点</h2>
 <p><strong>利点</strong>:</p>
 <ul>
