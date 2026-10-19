@@ -3590,7 +3590,12 @@
 <div class="arithmatex">\[
 m_{ik} = \frac{a_{ik}}{a_{kk}}
 \]</div>
-<p>を計算し、第 <span class="arithmatex">\(i\)</span> 行から「乗数 <span class="arithmatex">\(\times\)</span> 第 <span class="arithmatex">\(k\)</span> 行」を引く。これを <span class="arithmatex">\(k = 1, 2, \dots, n-1\)</span> について繰り返すと、<span class="arithmatex">\(A\)</span> は上三角行列になる。<span class="arithmatex">\(a_{kk}\)</span> を<strong>ピボット（pivot）</strong>と呼ぶ。</p>
+<p>を計算し、第 <span class="arithmatex">\(i\)</span> 行から「乗数 <span class="arithmatex">\(\times\)</span> 第 <span class="arithmatex">\(k\)</span> 行」を引く。成分で書けば</p>
+<div class="arithmatex">\[
+a_{ij} \leftarrow a_{ij} - m_{ik}\, a_{kj}, \qquad
+b_i \leftarrow b_i - m_{ik}\, b_k
+\]</div>
+<p>であり、<strong>右辺も係数行列と同じ乗数で同時に更新する</strong>。これを <span class="arithmatex">\(k = 1, 2, \dots, n-1\)</span> について繰り返すと、<span class="arithmatex">\(A\mathbf{x} = \mathbf{b}\)</span> は上三角系 <span class="arithmatex">\(U\mathbf{x} = \mathbf{c}\)</span> に変わる。<span class="arithmatex">\(a_{kk}\)</span> を<strong>ピボット（pivot）</strong>と呼ぶ。</p>
 <h3 id="_4">後退代入</h3>
 <p>上三角化された系 <span class="arithmatex">\(U\mathbf{x} = \mathbf{c}\)</span> は、最後の行 <span class="arithmatex">\(x_n = c_n / u_{nn}\)</span> から順に</p>
 <div class="arithmatex">\[
@@ -3616,14 +3621,14 @@ L\mathbf{y} = \mathbf{b} \ (\text{前進代入}), \qquad U\mathbf{x} = \mathbf{y
 PA = LU
 \]</div>
 <p>となる。これを使って解くときは、右辺にも同じ入れ替えを施して <span class="arithmatex">\(L\mathbf{y} = P\mathbf{b}\)</span>、<span class="arithmatex">\(U\mathbf{x} = \mathbf{y}\)</span> とする。実装上は「どの行とどの行を交換したか」をピボット列 <code>piv[]</code> として保存しておけばよく、<span class="arithmatex">\(P\)</span> を行列として持つ必要はない。</p>
-<p>なお、<span class="arithmatex">\(A\)</span> が<strong>対称正定値</strong>または<strong>狭義優対角</strong>なら部分ピボット選択なしでも消去が破綻せず数値的に安定であることが知られている。本ページの例題（<span class="arithmatex">\(\operatorname{tridiag}(-1,2,-1)\)</span>）は両方を満たすので、実際には一度も行が入れ替わらず <span class="arithmatex">\(P = I\)</span>、<span class="arithmatex">\(PA = LU\)</span> が <span class="arithmatex">\(A = LU\)</span> に一致する。</p>
+<p>なお、<span class="arithmatex">\(A\)</span> が<strong>対称正定値</strong>または<strong>狭義対角優位</strong>（各行で <span class="arithmatex">\(|a_{ii}| &gt; \sum_{j \neq i} |a_{ij}|\)</span>）なら部分ピボット選択なしでも消去が破綻せず数値的に安定であることが知られている。本ページの例題（<span class="arithmatex">\(\operatorname{tridiag}(-1,2,-1)\)</span>）は対称正定値である（対角優位性のほうは内側の行で等号になるため狭義ではない）ので、実際には一度も行が入れ替わらず <span class="arithmatex">\(P = I\)</span>、<span class="arithmatex">\(PA = LU\)</span> が <span class="arithmatex">\(A = LU\)</span> に一致する。</p>
 </div>
 <h2 id="fill-in">計算量と fill-in</h2>
 <p>ガウスの消去法の計算量は <span class="arithmatex">\(O(n^3)\)</span> であり、<span class="arithmatex">\(n\)</span> が大きいと急激に増大する。さらに深刻なのが、<strong>疎行列に直接法を適用するともとはゼロだった要素が消去の途中で非ゼロになる</strong>現象、すなわち fill-in である。</p>
 <figure>
   <img alt="直接法による fill-in" src="../img/fill_in.png" width="760" />
 <br />
-<figcaption>2次元の5点ラプラシアン（<span class="arithmatex">\(n=36\)</span>）の非ゼロパターン。左の疎な行列 <span class="arithmatex">\(A\)</span> を LU 分解すると、右のように帯の内側が非ゼロで埋まってしまう（赤が新たに生じた要素）。非ゼロ数は <span class="arithmatex">\(156 \to 406\)</span> に増えている。</figcaption>
+<figcaption>帯状の疎行列（2次元の5点ラプラシアン, <span class="arithmatex">\(n=36\)</span>）の非ゼロパターン。左の疎な行列 <span class="arithmatex">\(A\)</span> を LU 分解すると、右のように帯の内側が非ゼロで埋まってしまう（赤が新たに生じた要素）。非ゼロ数は <span class="arithmatex">\(156 \to 406\)</span> に増えている。</figcaption>
 </figure>
 <p>fill-in が起こると、せっかくの疎性が失われ、メモリと計算量が増大する。次元 <span class="arithmatex">\(n\)</span> が非常に大きい問題では、これを回避できる<a href="../iterative/">反復法</a>が有力になる。</p>
 <div class="admonition note">

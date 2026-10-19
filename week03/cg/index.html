@@ -3626,20 +3626,33 @@
 \]</div>
 <p>となる。つまり <strong><span class="arithmatex">\(A\mathbf{x} = \mathbf{b}\)</span> を解くことは <span class="arithmatex">\(\phi(\mathbf{x})\)</span> を最小化することと等価</strong>である。残差 <span class="arithmatex">\(\mathbf{r} = \mathbf{b} - A\mathbf{x} = -\nabla\phi\)</span> は、<span class="arithmatex">\(\phi\)</span> を最も急に減らす方向（最急降下方向）に一致する。</p>
 <h2 id="_2">最急降下法とそのジグザグ</h2>
-<p>最も素朴な最小化は、各反復で残差（最急降下）方向に進む<strong>最急降下法（steepest descent）</strong>である。方向 <span class="arithmatex">\(\mathbf{r}_k\)</span> に沿って <span class="arithmatex">\(\phi\)</span> を最小にする歩幅 <span class="arithmatex">\(\alpha_k = \dfrac{\mathbf{r}_k^{\top}\mathbf{r}_k}{\mathbf{r}_k^{\top} A\mathbf{r}_k}\)</span> をとって <span class="arithmatex">\(\mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{r}_k\)</span> と更新する。</p>
+<p>最も素朴な最小化は、各反復で残差（最急降下）方向に進む<strong>最急降下法（steepest descent）</strong>である。<span class="arithmatex">\(\mathbf{x}_{k+1} = \mathbf{x}_k + \alpha_k \mathbf{r}_k\)</span> と更新するとき、歩幅 <span class="arithmatex">\(\alpha_k\)</span> は方向 <span class="arithmatex">\(\mathbf{r}_k\)</span> に沿って <span class="arithmatex">\(\phi\)</span> を最小にするようにとる。</p>
+<p>この歩幅は解析的に求まる。<span class="arithmatex">\(\mathbf{x}_k\)</span> から <span class="arithmatex">\(\mathbf{r}_k\)</span> 方向に <span class="arithmatex">\(\alpha\)</span> だけ進んだ先の <span class="arithmatex">\(\phi\)</span> は、<span class="arithmatex">\(A\)</span> の対称性と <span class="arithmatex">\(A\mathbf{x}_k - \mathbf{b} = -\mathbf{r}_k\)</span> を使うと</p>
+<div class="arithmatex">\[
+\phi(\mathbf{x}_k + \alpha \mathbf{r}_k)
+= \phi(\mathbf{x}_k) - \alpha\, \mathbf{r}_k^{\top}\mathbf{r}_k
+  + \frac{\alpha^2}{2}\, \mathbf{r}_k^{\top} A \mathbf{r}_k
+\]</div>
+<p>という <span class="arithmatex">\(\alpha\)</span> の2次関数になる。<span class="arithmatex">\(A\)</span> が正定値なので <span class="arithmatex">\(\mathbf{r}_k^{\top} A \mathbf{r}_k &gt; 0\)</span>、すなわち下に凸であり、最小値は</p>
+<div class="arithmatex">\[
+\frac{d\phi}{d\alpha} = -\mathbf{r}_k^{\top}\mathbf{r}_k + \alpha\, \mathbf{r}_k^{\top} A \mathbf{r}_k = 0
+\quad\Longrightarrow\quad
+\alpha_k = \frac{\mathbf{r}_k^{\top}\mathbf{r}_k}{\mathbf{r}_k^{\top} A \mathbf{r}_k}
+\]</div>
+<p>で一意に定まる。1変数の2次関数の最小化なので、線形探索を反復する必要がない。</p>
 <p>しかしこの方法は、等高線が細長い（＝<span class="arithmatex">\(A\)</span> が悪条件な）場合に、谷を<strong>直角に折れながらジグザグに進む</strong>ため非常に遅い。連続する探索方向が直交してしまい、すでに最小化したはずの方向の成分を次のステップで再び悪化させてしまうのが原因である。</p>
 <figure>
   <img alt="最急降下法と共役勾配法の探索経路" src="../img/cg_path.png" width="760" />
 <br />
-<figcaption>悪条件な2次元2次形式の等高線上での探索経路。最急降下法（左）は直角に折れながらジグザグに進むのに対し、共役勾配法（右）はわずか2ステップ（次元数）で厳密な最小点に到達する。</figcaption>
+<figcaption>悪条件な2次元2次形式の等高線上での探索経路を重ねて描いたもの。同じ出発点 <span class="arithmatex">\(\mathbf{x}_0\)</span> から、最急降下法（オレンジ）は直角に折れながらジグザグに進んで 24 歩かかるのに対し、共役勾配法（赤）はわずか 2 ステップ（＝次元数）で厳密な最小点（緑星）に到達する。</figcaption>
 </figure>
 <h2 id="a-">A-共役な方向</h2>
 <p>ジグザグの原因は、探索方向が互いに「干渉」することにある。そこで、方向ベクトルの組 <span class="arithmatex">\(\{\mathbf{p}_0, \mathbf{p}_1, \dots\}\)</span> を、ふつうの直交ではなく <strong><span class="arithmatex">\(A\)</span>-共役（<span class="arithmatex">\(A\)</span>-conjugate）</strong>、すなわち</p>
 <div class="arithmatex">\[
 \mathbf{p}_i^{\top} A\, \mathbf{p}_j = 0 \qquad (i \neq j)
 \]</div>
-<p>を満たすように選ぶ。<span class="arithmatex">\(A\)</span>-共役な方向に沿って順に厳密な1次元最小化を行うと、<strong>一度最小化した方向の成分は二度と悪化しない</strong>。したがって <span class="arithmatex">\(n\)</span> 個の <span class="arithmatex">\(A\)</span>-共役方向で最小化すれば、<span class="arithmatex">\(n\)</span> 次元空間の最小点に<strong>ちょうど <span class="arithmatex">\(n\)</span> ステップで</strong>到達する。</p>
-<p>共役勾配法の巧妙な点は、<span class="arithmatex">\(A\)</span>-共役な方向の組をあらかじめ全部用意するのではなく、<strong>残差から1本ずつ漸化式で生成する</strong>ところにある。新しい方向 <span class="arithmatex">\(\mathbf{p}_k\)</span> は、現在の残差 <span class="arithmatex">\(\mathbf{r}_k\)</span> に直前の方向 <span class="arithmatex">\(\mathbf{p}_{k-1}\)</span> を <span class="arithmatex">\(\beta_k\)</span> だけ混ぜて作る。</p>
+<p>を満たすように選ぶ。<span class="arithmatex">\(A\)</span> が正定値なので <span class="arithmatex">\(\langle \mathbf{u}, \mathbf{v}\rangle_A = \mathbf{u}^{\top} A \mathbf{v}\)</span> は内積の条件を満たす。この <span class="arithmatex">\(A\)</span>-内積で測れば、<span class="arithmatex">\(A\)</span>-共役とは<strong>ふつうの直交をそのまま読み替えたもの</strong>である。<span class="arithmatex">\(A\)</span>-共役な方向に沿って順に厳密な1次元最小化を行うと、<strong>一度最小化した方向の成分は二度と悪化しない</strong>。したがって <span class="arithmatex">\(n\)</span> 個の <span class="arithmatex">\(A\)</span>-共役方向で最小化すれば、<span class="arithmatex">\(n\)</span> 次元空間の最小点に<strong>ちょうど <span class="arithmatex">\(n\)</span> ステップで</strong>到達する。</p>
+<p>共役勾配法の巧妙な点は、<span class="arithmatex">\(A\)</span>-共役な方向の組をあらかじめ全部用意するのではなく、<strong>残差から1本ずつ漸化式で生成する</strong>ところにある。新しい方向 <span class="arithmatex">\(\mathbf{p}_{k+1}\)</span> は、現在の残差 <span class="arithmatex">\(\mathbf{r}_{k+1}\)</span> に直前の方向 <span class="arithmatex">\(\mathbf{p}_k\)</span> を <span class="arithmatex">\(\beta_k\)</span> だけ混ぜて作る。</p>
 <h2 id="cg">CG アルゴリズム</h2>
 <div class="arithmatex">\[
 \begin{aligned}
@@ -3779,7 +3792,7 @@
 <figure>
   <img alt="4手法の収束比較" src="../img/solver_comparison.png" width="700" />
 <br />
-<figcaption>ヤコビ法・ガウス＝ザイデル法・最急降下法・共役勾配法の相対残差の推移（縦軸は対数）。定常反復法と最急降下法が数百回かけてゆるやかに減るのに対し、共役勾配法は数反復で機械精度に到達する。</figcaption>
+<figcaption>ヤコビ法・ガウス＝ザイデル法・最急降下法・共役勾配法の相対残差の推移（縦軸は対数）。定常反復法と最急降下法が数百回かけてゆるやかに減るのに対し、共役勾配法はわずか 5 反復で機械精度に到達する。</figcaption>
 </figure>
 <table>
 <thead>
@@ -3805,7 +3818,7 @@
 </tr>
 <tr>
 <td>最急降下法</td>
-<td style="text-align: center;">数百</td>
+<td style="text-align: center;">424</td>
 <td>行列ベクトル積 ×1</td>
 <td>対称正定値</td>
 </tr>
@@ -3817,9 +3830,9 @@
 </tr>
 </tbody>
 </table>
-<p>CG は定常反復法と同じく「行列ベクトル積1回」が主計算でありながら、反復回数が劇的に少ない。<span class="arithmatex">\(n\)</span> を大きくするとこの差はさらに広がる（<a href="../exercises/#exercise-3">演習3</a>で確認する）。</p>
+<p>CG は定常反復法と同じく「行列ベクトル積1回」が主計算でありながら、反復回数が劇的に少ない。<span class="arithmatex">\(n\)</span> を大きくするとこの差はさらに広がる（<a href="../exercises/#exercise-1">演習1</a>で確認する）。</p>
 <h2 id="plot">可視化</h2>
-<p><code>cg.c</code> は表を標準出力に出すのと同時に、同じ値を <code>cg.dat</code> にも書き出す（1列目が反復回数 <span class="arithmatex">\(k\)</span>、2列目が相対残差）。<a href="../iterative/#plot">定常反復法のページ</a>の <code>iterative.c</code> も同じ問題の <code>jacobi.dat</code>・<code>gauss_seidel.dat</code> を作るので、3つを並べれば上の比較図が描ける。</p>
+<p><code>cg.c</code> は表を標準出力に出すのと同時に、同じ値を <code>cg.dat</code> にも書き出す（1列目が反復回数 <span class="arithmatex">\(k\)</span>、2列目が相対残差）。<a href="../iterative/#plot">定常反復法のページ</a>の <code>iterative.c</code> も同じ問題の <code>jacobi.dat</code>・<code>gauss_seidel.dat</code> を作るので、3つを並べれば上の比較図のうち最急降下法を除く3本が描ける（最急降下法は本ページではコードを与えていない）。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -3834,16 +3847,15 @@
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;iteration $k$&quot;</span><span class="p">)</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;relative residual&quot;</span><span class="p">)</span>
 <a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;CG reaches the exact solution in $n$ steps&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;solver_comparison.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;solver_comparison.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 <p>実行:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cc<span class="w"> </span>-O2<span class="w"> </span>-Wall<span class="w"> </span>-o<span class="w"> </span>iterative<span class="w"> </span>iterative.c<span class="w"> </span>-lm<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./iterative
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cc<span class="w"> </span>-O2<span class="w"> </span>-Wall<span class="w"> </span>-o<span class="w"> </span>cg<span class="w"> </span>cg.c<span class="w"> </span>-lm<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./cg
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-O2<span class="w"> </span>-o<span class="w"> </span>iterative<span class="w"> </span>iterative.c<span class="w"> </span>-lm<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./iterative
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>gcc<span class="w"> </span>-Wall<span class="w"> </span>-O2<span class="w"> </span>-o<span class="w"> </span>cg<span class="w"> </span>cg.c<span class="w"> </span>-lm<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./cg
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>python3<span class="w"> </span>plot_cg.py
 </code></pre></div>
 <p>残差がちょうど <span class="arithmatex">\(0\)</span> になる反復では対数目盛に載らないので、<code>np.maximum</code> で下限を入れてある。定常反復法が数百回かけて斜めに降りるのに対し、CG は <span class="arithmatex">\(5\)</span> 反復で図の下端へ落ちる。</p>
@@ -3857,7 +3869,7 @@
 </ul>
 <p><strong>欠点</strong>:</p>
 <ul>
-<li><strong>対称正定値</strong>でないと（そのままでは）使えない。非対称・不定な行列では破綻しうる（<a href="../exercises/#exercise-4">演習4</a>参照）</li>
+<li><strong>対称正定値</strong>でないと（そのままでは）使えない。非対称・不定な行列では破綻しうる（<a href="../exercises/#exercise-2">演習2</a>参照）</li>
 <li>収束の速さは条件数に依存し、悪条件な問題では良い前処理が不可欠</li>
 <li>非対称問題には GMRES・BiCGSTAB など別の反復法が必要になる</li>
 </ul>

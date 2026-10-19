@@ -3579,7 +3579,13 @@ M\mathbf{x}^{(k+1)} = N\mathbf{x}^{(k)} + \mathbf{b}
 \mathbf{x}^{(k+1)} = M^{-1} N\, \mathbf{x}^{(k)} + M^{-1}\mathbf{b}
 \]</div>
 <p>とみなす。<span class="arithmatex">\(M\)</span> は「解きやすい」行列に選ぶ（対角行列や三角行列など）。反復ごとに分割が変わらないので<strong>定常</strong>反復法と呼ぶ。</p>
-<p>行列 <span class="arithmatex">\(A\)</span> を対角部分 <span class="arithmatex">\(D\)</span>、狭義下三角部分 <span class="arithmatex">\(L\)</span>、狭義上三角部分 <span class="arithmatex">\(U\)</span> に分けて <span class="arithmatex">\(A = D + L + U\)</span> と書くと、分割の仕方で手法が決まる。</p>
+<p>行列 <span class="arithmatex">\(A\)</span> を対角部分 <span class="arithmatex">\(D\)</span>、対角を含まない下側 <span class="arithmatex">\(L\)</span>、対角を含まない上側 <span class="arithmatex">\(U\)</span> に分けて <span class="arithmatex">\(A = D + L + U\)</span> と書くと、分割の仕方で手法が決まる。<span class="arithmatex">\(n = 3\)</span> なら</p>
+<div class="arithmatex">\[
+A = \underbrace{\begin{pmatrix} a_{11} &amp; 0 &amp; 0 \\ 0 &amp; a_{22} &amp; 0 \\ 0 &amp; 0 &amp; a_{33} \end{pmatrix}}_{D}
++ \underbrace{\begin{pmatrix} 0 &amp; 0 &amp; 0 \\ a_{21} &amp; 0 &amp; 0 \\ a_{31} &amp; a_{32} &amp; 0 \end{pmatrix}}_{L}
++ \underbrace{\begin{pmatrix} 0 &amp; a_{12} &amp; a_{13} \\ 0 &amp; 0 &amp; a_{23} \\ 0 &amp; 0 &amp; 0 \end{pmatrix}}_{U}
+\]</div>
+<p>である。<span class="arithmatex">\(L\)</span>・<span class="arithmatex">\(U\)</span> はそれぞれ<strong>狭義下三角部分</strong>・<strong>狭義上三角部分</strong>と呼ぶ。<a href="../direct/">直接法</a>の <span class="arithmatex">\(L\)</span>・<span class="arithmatex">\(U\)</span>（LU 分解の因子）は対角を含むので、同じ文字でも別物である。</p>
 <h2 id="_3">ヤコビ法</h2>
 <p>ヤコビ法（Jacobi method）は <span class="arithmatex">\(M = D\)</span>（対角部分）にとる。すなわち各成分を</p>
 <div class="arithmatex">\[
@@ -3602,7 +3608,7 @@ x_i^{(k+1)} = \frac{1}{a_{ii}}\left( b_i - \sum_{j &lt; i} a_{ij}\, x_j^{(k+1)} 
 |a_{ii}| &gt; \sum_{j \neq i} |a_{ij}|
 \]</div>
 <p>を満たせば、ヤコビ法・ガウス＝ザイデル法はともに収束する。</p>
-<p>本章の例題 <span class="arithmatex">\(A = \mathrm{tridiag}(-1, 2, -1)\)</span> は（等号つきの）弱い対角優位だが、ヤコビ反復行列のスペクトル半径は <span class="arithmatex">\(\rho = \cos\dfrac{\pi}{n+1} &lt; 1\)</span> となり収束する。ただし <span class="arithmatex">\(n\)</span> が大きいと <span class="arithmatex">\(\rho \to 1\)</span> となり、収束は非常に遅くなる。</p>
+<p>本章の例題 <span class="arithmatex">\(A = \mathrm{tridiag}(-1, 2, -1)\)</span> は（等号つきの）弱い対角優位だが、ヤコビ反復行列のスペクトル半径は <span class="arithmatex">\(\rho_{\rm J} = \cos\dfrac{\pi}{n+1} &lt; 1\)</span> となり収束する。ただし <span class="arithmatex">\(n\)</span> が大きいと <span class="arithmatex">\(\rho_{\rm J} \to 1\)</span> となり、収束は非常に遅くなる。</p>
 <figure>
   <img alt="ヤコビ法とガウス＝ザイデル法の収束" src="../img/iterative_convergence.png" width="680" />
 <br />
@@ -3619,7 +3625,7 @@ x_i^{(k+1)} = \frac{1}{a_{ii}}\left( b_i - \sum_{j &lt; i} a_{ij}\, x_j^{(k+1)} 
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    # ヤコビ法: 全成分を旧い x から計算してまとめて更新
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    # ガウス＝ザイデル法: i の昇順に、最新の x を使って即更新
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    for i = 1, ..., n:
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        x_i ← (b_i - Σ_{j≠i} a_{ij} x_j) / a_{ii}
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        x_i ← (b_i - Σ_{j≠i} a_ij x_j) / a_ii
 </code></pre></div>
 <h2 id="_7">サンプルコード</h2>
 <p><a href="../#example">共通の例題</a>である三重対角系（<span class="arithmatex">\(n = 10\)</span>）を、ヤコビ法とガウス＝ザイデル法で解く。相対残差 <span class="arithmatex">\(\|\mathbf{b} - A\mathbf{x}\| / \|\mathbf{b}\|\)</span> が <span class="arithmatex">\(10^{-8}\)</span> を下回るまでの反復回数を比較する。</p>
@@ -3688,7 +3694,7 @@ x_i^{(k+1)} = \frac{1}{a_{ii}}\left( b_i - \sum_{j &lt; i} a_{ij}\, x_j^{(k+1)} 
 <a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="w">            </span><span class="kt">double</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 <a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w">            </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">];</span><span class="w">              </span><span class="cm">/* 最新の x を使う */</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w">            </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">];</span><span class="w">              </span><span class="cm">/* 最新の x を即座に使う */</span>
 <a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">maxit</span><span class="p">;</span>
@@ -3736,8 +3742,8 @@ x_i^{(k+1)} = \frac{1}{a_{ii}}\left( b_i - \sum_{j &lt; i} a_{ij}\, x_j^{(k+1)} 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ヤコビ法          :   444 反復, 最大誤差 = 1.642e-07
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ガウス＝ザイデル法:   223 反復, 最大誤差 = 1.583e-07
 </code></pre></div>
-<p>ガウス＝ザイデル法はヤコビ法のおよそ半分の反復回数で収束している。これは三重対角系で知られる結果と整合する（ガウス＝ザイデル法の収束率はヤコビ法のちょうど2乗 <span class="arithmatex">\(\rho_{\text{GS}} = \rho_{\text{J}}^2\)</span> になる）。</p>
-<p>ただし、わずか10次元の問題でも数百回の反復を要しており、定常反復法の収束の遅さがうかがえる。次元 <span class="arithmatex">\(n\)</span> が増えるとこの反復回数は <span class="arithmatex">\(O(n^2)\)</span> で増大する（<a href="../exercises/#exercise-3">演習3</a>参照）。この遅さを劇的に改善するのが、次に学ぶ<a href="../cg/">共役勾配法</a>である。</p>
+<p>ガウス＝ザイデル法はヤコビ法のおよそ半分の反復回数で収束している。これは三重対角系で知られる結果と整合する（ガウス＝ザイデル法の収束率はヤコビ法のちょうど2乗 <span class="arithmatex">\(\rho_{\rm GS} = \rho_{\rm J}^2\)</span> になる）。</p>
+<p>ただし、わずか10次元の問題でも数百回の反復を要しており、定常反復法の収束の遅さがうかがえる。次元 <span class="arithmatex">\(n\)</span> が増えるとこの反復回数は <span class="arithmatex">\(O(n^2)\)</span> で増大する（<a href="../exercises/#exercise-1">演習1</a>参照）。この遅さを劇的に改善するのが、次に学ぶ<a href="../cg/">共役勾配法</a>である。</p>
 <h2 id="plot">可視化</h2>
 <p>標準出力に出るのは最終的な反復回数だけだが、<code>jacobi</code> と <code>gauss_seidel</code> は<strong>毎反復の相対残差</strong>を <code>jacobi.dat</code>・<code>gauss_seidel.dat</code> に書き出す（1列目が反復回数 <span class="arithmatex">\(k\)</span>、2列目が <span class="arithmatex">\(\|b-Ax_k\|/\|b\|\)</span>）。ファイルポインタを引数で渡しているのは、2つの解法で同じ関数の形を保つためである。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -3756,7 +3762,7 @@ x_i^{(k+1)} = \frac{1}{a_{ii}}\left( b_i - \sum_{j &lt; i} a_{ij}\, x_j^{(k+1)} 
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;iterative.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;iterative_convergence.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 <p>実行:</p>
