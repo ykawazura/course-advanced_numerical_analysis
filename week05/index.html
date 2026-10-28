@@ -3607,6 +3607,7 @@
 </tr>
 </tbody>
 </table>
+<p>表の AB はアダムス＝バッシュフォース法（Adams–Bashforth method）の略で、<a href="multistep/">線形多段法</a>で扱う。後退オイラー法と台形則は<a href="implicit/">陰的解法</a>で扱う。</p>
 <h2 id="2">本章を貫く2つの例題</h2>
 <p>第4回の例題1を<strong>精度の検証</strong>にそのまま引き継ぎ、陰的解法の動機づけのために<strong>硬い問題</strong>を新たに例題2として導入する。</p>
 <h3 id="example1">例題1: 厳密解のあるスカラー問題（第4回から継続）</h3>
@@ -3623,10 +3624,10 @@ y(2) = 9 - \tfrac{1}{2} e^2 \approx 5.305472.
 <div class="arithmatex">\[
 y' = -\lambda y, \qquad y(0) = 1, \qquad \lambda &gt; 0 \ (\text{大きい}).
 \]</div>
-<p>厳密解は <span class="arithmatex">\(y(t) = e^{-\lambda t}\)</span> で、<span class="arithmatex">\(\lambda\)</span> が大きいほど<strong>急速になめらかに減衰</strong>する。本ページでは <span class="arithmatex">\(\lambda = 20\)</span> を主に用いる。</p>
+<p>厳密解は <span class="arithmatex">\(y(t) = e^{-\lambda t}\)</span> で、<span class="arithmatex">\(\lambda\)</span> が大きいほど<strong>急速になめらかに減衰</strong>する。本回では <span class="arithmatex">\(\lambda = 20\)</span> を主に用いる。</p>
 <p>この問題は線形で答えが分かりきっているが、<strong>数値解法の安定性</strong>を浮き彫りにする格好の題材である。前進オイラー法を適用すると</p>
 <div class="arithmatex">\[
-y_{n+1} = (1 - \lambda h)\, y_n
+\frac{y_{n+1} - y_n}{h} = -\lambda y_n \quad\Longrightarrow\quad y_{n+1} = (1 - \lambda h)\, y_n
 \]</div>
 <p>となり、増幅率 <span class="arithmatex">\(|1 - \lambda h| &lt; 1\)</span>、すなわち刻み幅が <span class="arithmatex">\(h &lt; 2/\lambda\)</span> でなければ振動・発散してしまう。解そのものはなめらかに <span class="arithmatex">\(0\)</span> へ減衰するのに、<strong>精度ではなく安定性のために刻みを極端に小さくせざるを得ない</strong>——これが<strong>硬さ（stiffness）</strong>である。一方、後退オイラー法 <span class="arithmatex">\(y_{n+1} = y_n/(1+\lambda h)\)</span> は任意の <span class="arithmatex">\(h&gt;0\)</span> で単調減衰し（無条件安定）、台形則 <span class="arithmatex">\(y_{n+1} = \frac{1-\lambda h/2}{1+\lambda h/2}\,y_n\)</span> は有界だが <span class="arithmatex">\(\lambda h &gt; 2\)</span> で符号が振動する。<strong>陰的解法の必要性</strong>を可視化する中心的な例題である。</p>
 <div class="admonition note">
@@ -3638,7 +3639,7 @@ y_{n+1} = (1 - \lambda h)\, y_n
 <li><a href="multistep/">線形多段法</a> — アダムス＝バッシュフォース（陽的）／アダムス＝ムルトン（陰的）・起動問題・収束次数</li>
 <li><a href="implicit/">陰的解法</a> — 後退オイラー法・台形則・陰的方程式の解き方（不動点反復／ニュートン法）・硬い問題</li>
 <li><a href="predictor-corrector/">予測子・修正子法</a> — PECE・ホイン法との関係・AB–AM 対</li>
-<li><a href="exercises/">演習問題</a> — AB2 の2次精度・後退オイラーの不動点反復・硬い問題の安定限界・台形則</li>
+<li><a href="exercises/">演習問題</a> — 同じ精度に達するまでの <span class="arithmatex">\(f\)</span> の評価回数</li>
 </ul>
 
 

@@ -3755,6 +3755,7 @@ f = \frac{1-1/S}{1-1/P}\bigg|_{S=3.262,\;P=12} \approx 0.756,
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kt">double</span><span class="w"> </span><span class="n">sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">omp_get_wtime</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="p">;</span><span class="w">      </span><span class="cm">/* 実時間（秒） */</span>
 </code></pre></div>
 <h2 id="sample">サンプルコード</h2>
+<p>ヤコビ反復の更新式は<a href="../../week10/iterative/#jacobi">第10回の <code>jacobi_sweep</code></a> と同じだが、関数は本回のために書き直してある。格子は区間の数 <span class="arithmatex">\(N\)</span> でなく内部点の数 <span class="arithmatex">\(n\)</span> で決め（<span class="arithmatex">\(h=1/(n+1)\)</span>）、新旧の配列は値を写さずにポインタを入れ替えて交代させる。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span>

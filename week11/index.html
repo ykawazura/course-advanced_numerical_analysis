@@ -2323,7 +2323,7 @@
   <a href="#reuse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第6回・第9回の道具の再利用
+        再利用する回
       
     </span>
   </a>
@@ -3507,7 +3507,7 @@
   <a href="#reuse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第6回・第9回の道具の再利用
+        再利用する回
       
     </span>
   </a>
@@ -3682,7 +3682,7 @@ u(x,t) = u_0(x-ct)
 <li><strong>差分の「依存領域」が特性線の足を含まなければならない。</strong> 時刻 <span class="arithmatex">\(t^{n+1}\)</span> の点 <span class="arithmatex">\(x_j\)</span> の値は、<span class="arithmatex">\(x_j-c\Delta t\)</span> にあった値で決まる。差分式が参照する格子点がその位置を挟んでいなければ、解は物理的に必要な情報を受け取れない。これが <strong>CFL 条件</strong>の正体である。</li>
 <li><strong>不連続を含む解では「振動しないこと」が精度より重要になりうる。</strong> 濃度や密度が負になれば、そのあと非線形項を通して計算全体が破綻する。</li>
 </ol>
-<h2 id="reuse">第6回・第9回の道具の再利用</h2>
+<h2 id="reuse">再利用する回</h2>
 <p>第9回で導入したフォン・ノイマン安定性解析が、本回では<strong>中心的な道具</strong>になる。格子上の波 <span class="arithmatex">\(u_j^n=G^n e^{\mathrm{i}\theta j}\)</span>（<span class="arithmatex">\(\theta=k\Delta x\)</span> は1格子あたりの位相）を差分式に代入して増幅率 <span class="arithmatex">\(G(\theta)\)</span> を求め、<span class="arithmatex">\(\lvert G\rvert\le1\)</span> を要求する、という同じ手続きである。違うのは、拡散方程式では <span class="arithmatex">\(G\)</span> が実数だったのに対し、移流方程式では<strong>複素数</strong>になることだ。その絶対値が振幅の誤差（数値拡散）を、偏角が位相の誤差（数値分散）を教えてくれる。</p>
 <table>
 <thead>
@@ -3779,7 +3779,7 @@ u(x,0) = \sin 2\pi x
 <li><a href="upwind/">風上差分と CFL 条件</a> — FTCS の無条件不安定・1次風上差分・依存領域と CFL 条件・<span class="arithmatex">\(\nu=1\)</span> での厳密性</li>
 <li><a href="dissipation-dispersion/">数値拡散と数値分散</a> — 修正方程式・増幅率の絶対値と偏角・ピーク値と位相遅れの定量予測</li>
 <li><a href="higher-order/">高次精度スキーム</a> — Lax–Friedrichs 法・Lax–Wendroff 法・収束次数の実測・単調性とのトレードオフ・TVD とリミッタ</li>
-<li><a href="exercises/">演習問題</a> — CFL 条件の実験・風上差分の1次精度・Lax–Wendroff 法の2次精度と振動・定常移流拡散とセル・ペクレ数</li>
+<li><a href="exercises/">演習問題</a> — CFL 条件の実験・風上差分の振幅減衰と増幅率・Lax–Wendroff 法の不連続解での振動・定常移流拡散とセル・ペクレ数</li>
 </ul>
 
 

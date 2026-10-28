@@ -3564,7 +3564,7 @@
 <ul>
 <li>2次元・3次元の拡散方程式を<strong>5点差分（7点差分）</strong>で離散化し、陽解法の安定条件が <span class="arithmatex">\(r\le1/(2d)\)</span>（<span class="arithmatex">\(d\)</span> は空間次元）と<strong>次元に反比例して厳しくなる</strong>ことを、増幅率と最大値原理の両方から導けるようになる</li>
 <li>未知数が <span class="arithmatex">\(N^d\)</span>、必要なステップ数が <span class="arithmatex">\(N^2\)</span> に比例するため、総計算量が <span class="arithmatex">\(N^{d+2}\)</span> で増える——<strong>次元の呪い（curse of dimensionality）</strong>を数値で見積もれるようになる</li>
-<li><strong>交互方向陰解法（ADI, alternating direction implicit method）</strong>を実装し、「2次元の陰解法を、各方向の三重対角系に分解する」という発想を説明できるようになる。ここで<a href="../week07/finite-difference/#thomas">第7回のトーマス法</a>がそのまま再利用される</li>
+<li><strong>交互方向陰解法（ADI, alternating direction implicit method）</strong>を実装し、「2次元の陰解法を、各方向の三重対角系に分解する」という発想を説明できるようになる。ここで<a href="../week07/finite-difference/#sample">第7回のサンプルコード</a>の関数 <code>thomas</code> が1文字も変えずに再利用される</li>
 <li>ADI が<strong>無条件安定かつ時間2次精度</strong>であること、しかし<a href="../week06/a-l-stability/#l-stability">第6回の台形則</a>・<a href="../week09/implicit/#crank-nicolson">第9回のクランク＝ニコルソン法</a>と同じく <strong>L 安定ではない</strong>ことを、増幅率の式から示せるようになる</li>
 <li>多次元配列のメモリ配置（row-major）とループ順序が実行時間を数倍変えることを実測し、計算量とメモリを事前に見積もれるようになる</li>
 </ul>

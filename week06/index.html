@@ -1545,10 +1545,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        走る例題
+        本回を貫く3つの例題
       
     </span>
   </a>
@@ -1556,7 +1556,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         このページの構成
@@ -3477,10 +3477,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        走る例題
+        本回を貫く3つの例題
       
     </span>
   </a>
@@ -3488,7 +3488,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         このページの構成
@@ -3522,7 +3522,7 @@
 <li><strong>収束</strong>（<span class="arithmatex">\(h\to0\)</span> の極限で正しい解に近づく）と <strong>絶対安定性</strong>（有限の刻み幅 <span class="arithmatex">\(h\)</span> で誤差が増大しない）が別の概念であることを理解する</li>
 <li><strong>テスト方程式</strong> <span class="arithmatex">\(y'=\lambda y\)</span> の上で各手法の <strong>安定関数</strong> <span class="arithmatex">\(R(z)\)</span>（<span class="arithmatex">\(z=h\lambda\)</span>）を求め、<strong>絶対安定領域</strong>を複素平面に描く</li>
 <li><strong>A安定性</strong>・<strong>L安定性</strong> を定義し、陰的解法が硬い問題に強い理由を説明できる。第5回で見た台形則の符号振動の正体を突き止める</li>
-<li>線形連立系の安定性が各固有値で決まること、<strong>剛さ</strong>（stiffness）が陽解法に厳しい刻み制約を課すことを理解する</li>
+<li>線形連立系の安定性が各固有値で決まること、<strong>硬さ</strong>（stiffness）が陽解法に厳しい刻み制約を課すことを理解する</li>
 </ul>
 <h2 id="_2">なぜ「安定性」を改めて論じるのか</h2>
 <p>第4回では、刻み幅 <span class="arithmatex">\(h\)</span> を小さくすると数値解が真の解に近づく <strong>収束</strong>（convergence）と、その速さを表す <strong>収束次数</strong>（order of convergence）を学んだ。しかし第5回の硬い問題では、収束する手法であっても <span class="arithmatex">\(h\)</span> が大きいと数値解が振動・発散する現象を目にした。前進オイラー法で <span class="arithmatex">\(y'=-20y\)</span> を <span class="arithmatex">\(h=0.12\)</span> で解くと、真の解は <span class="arithmatex">\(0\)</span> へ滑らかに減衰するのに、数値解は <span class="arithmatex">\(-5.38\)</span> へと発散した。</p>
@@ -3570,18 +3570,18 @@ y' = \lambda y, \qquad y(0)=y_0, \qquad \lambda \in \mathbb{C}.
 </tr>
 </tbody>
 </table>
-<h2 id="_3">走る例題</h2>
+<h2 id="3">本回を貫く3つの例題</h2>
 <p>本回では3つの例題を一貫して用いる。</p>
 <ol>
 <li><strong>テスト方程式</strong> <span class="arithmatex">\(y'=\lambda y\)</span>（上述）。安定関数・絶対安定領域・A安定・L安定をすべてこの方程式の上で定義する。</li>
-<li><span id="example-stiff"></span><strong>硬いスカラー方程式（第5回からの継続）</strong>：<span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda=20\)</span>、演習では <span class="arithmatex">\(50,\ 100\)</span>）。第5回で「前進は <span class="arithmatex">\(h&lt;2/\lambda\)</span> でないと発散する」と数値表で見た現象を、安定関数 <span class="arithmatex">\(R(z)\)</span> のグラフとして説明し直す。</li>
-<li><span id="stiff-system"></span><strong>硬い線形連立系（新規）</strong>：<span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span>、<span class="arithmatex">\(A\)</span> は固有値 <span class="arithmatex">\(\lambda_1=-1,\ \lambda_2=-100\)</span> をもつ。速い成分（<span class="arithmatex">\(\lambda_2\)</span>）と遅い成分（<span class="arithmatex">\(\lambda_1\)</span>）で時間スケールが100倍違う典型的な硬い系で、陽解法が刻みに縛られる様子と、陰的解法（各ステップで線形系を解く＝第3・4回の再利用）の威力を見る。</li>
+<li><span id="example-stiff"></span><strong>硬いスカラー方程式（第5回からの継続）</strong>：<span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda=20\)</span>。<a href="a-l-stability/#sample">A安定とL安定</a>では <span class="arithmatex">\(100\)</span> も使う）。第5回で「前進は <span class="arithmatex">\(h&lt;2/\lambda\)</span> でないと発散する」と数値表で見た現象を、安定関数 <span class="arithmatex">\(R(z)\)</span> のグラフとして説明し直す。</li>
+<li><span id="stiff-system"></span><strong>硬い線形連立系（新規）</strong>：<span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span>、<span class="arithmatex">\(A\)</span> は固有値 <span class="arithmatex">\(\lambda_1=-1,\ \lambda_2=-100\)</span> をもつ。速い成分（<span class="arithmatex">\(\lambda_2\)</span>）と遅い成分（<span class="arithmatex">\(\lambda_1\)</span>）で時間スケールが100倍違う典型的な硬い系で、陽解法が刻みに縛られる様子と、陰的解法（各ステップで線形系を第3回のガウス消去で解く）の威力を見る。</li>
 </ol>
-<h2 id="_4">このページの構成</h2>
+<h2 id="_3">このページの構成</h2>
 <ul>
 <li><a href="absolute-stability/">絶対安定性と絶対安定領域</a>：安定関数 <span class="arithmatex">\(R(z)\)</span>、絶対安定領域の複素平面図、RK 法の安定領域。</li>
 <li><a href="a-l-stability/">A安定とL安定</a>：陰的解法がなぜ硬い問題に強いのか、台形則の符号振動の正体。</li>
-<li><a href="systems/">連立系の安定性と硬い問題</a>：剛さ、対角化、陰的解法と線形ソルバ、多段法・ゼロ安定性の紹介。</li>
+<li><a href="systems/">連立系の安定性と硬い問題</a>：硬さ、対角化、陰的解法と線形ソルバ、多段法・ゼロ安定性の紹介。</li>
 <li><a href="exercises/">演習問題</a></li>
 </ul>
 

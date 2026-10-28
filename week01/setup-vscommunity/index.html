@@ -577,6 +577,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Studio で注意すること
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3454,6 +3465,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#visual-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Studio で注意すること
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3545,6 +3567,19 @@
 <li>「C/C++」→「全般」→「警告レベル」を「レベル4 (/W4)」に変更する</li>
 </ol>
 </div>
+<h2 id="visual-studio">Visual Studio で注意すること</h2>
+<p>本講義のプログラムの多くは、作図用のデータを <code>fopen</code> でファイルに書き出す。Visual Studio では、そのビルドが次のエラーで止まることがある。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>error C4996: &#39;fopen&#39;: This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+</code></pre></div>
+<p>C4996 は本来は警告だが、プロジェクトの「SDL チェック」（<code>/sdl</code>）が有効だとエラーとして扱われる。<code>fopen</code> は C の標準関数なので、次の手順でこの警告を止めてよい。</p>
+<ol>
+<li>ソリューションエクスプローラーでプロジェクトを右クリック →「プロパティ」</li>
+<li>上部の「構成」を「すべての構成」、「プラットフォーム」を「すべてのプラットフォーム」にする</li>
+<li>「構成プロパティ」→「C/C++」→「プリプロセッサ」→「プリプロセッサの定義」の先頭に <code>_CRT_SECURE_NO_WARNINGS;</code> を書き足す（定義はセミコロンで区切る）</li>
+<li>「OK」で閉じ、ビルドし直す</li>
+</ol>
+<p>1 つのファイルだけで済ませるなら、そのファイルの先頭、すべての <code>#include</code> より前に <code>#define _CRT_SECURE_NO_WARNINGS</code> と書いてもよい。</p>
+<p>もう 1 つ、Visual Studio の C コンパイラは、<code>double x[n];</code> のように大きさを変数で決める配列（可変長配列）に対応しない。本講義のプログラムは可変長配列を使わず、大きさが実行時に決まる配列は <code>malloc</code> で確保する（<a href="../../week03/iterative/#malloc">第3回の反復法</a>）。自分でプログラムを書くときも同じようにすること。</p>
 <h2 id="_4">演習用プロジェクトの管理</h2>
 <p>各回の演習では、新しいプロジェクトを作成するか、既存プロジェクトのソースファイルを差し替えて使用する。</p>
 <ul>
