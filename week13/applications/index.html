@@ -2836,6 +2836,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="拡散は硬い">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrating-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        積分因子法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3551,6 +3568,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="拡散は硬い">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrating-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        積分因子法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3651,7 +3685,7 @@
 <p>同じ問題を第9回の FTCS で解くと、<span class="arithmatex">\(r=\nu\Delta t/\Delta x^2\le1/2\)</span> の制限があるため <span class="arithmatex">\(N=128\)</span> では <span class="arithmatex">\(t=0.1\)</span> に到達するのに <strong>167 ステップ</strong>が必要で、それでも誤差は <span class="arithmatex">\(2.6\times10^{-4}\)</span> にとどまる。スペクトル法は <span class="arithmatex">\(N=16\)</span>・変換1回で <span class="arithmatex">\(5.0\times10^{-16}\)</span> である。</p>
 <div class="admonition note">
 <p class="admonition-title">「厳密に解ける」のは線形・定数係数・周期境界だからである</p>
-<p><span class="arithmatex">\(\nu\)</span> が場所によって変わる（<span class="arithmatex">\(\nu(x)\partial_x u\)</span> の形）だけで、フーリエ空間のモードは結合し、この手は使えなくなる。それでも「線形で定数係数の部分だけをフーリエ空間で厳密に扱い、残りを陽的に進める」という考え方は生き残る（<strong>積分因子法</strong>）。次節の擬スペクトル法と組み合わせるのが実際の使い方である。</p>
+<p><span class="arithmatex">\(\nu\)</span> が場所によって変わる（<span class="arithmatex">\(\nu(x)\partial_x u\)</span> の形）だけで、フーリエ空間のモードは結合し、この手は使えなくなる。それでも「線形で定数係数の部分だけをフーリエ空間で厳密に扱い、残りを陽的に進める」という考え方は生き残る（<a href="#integrating-factor"><strong>積分因子法</strong></a>）。次節の擬スペクトル法と組み合わせるのが実際の使い方である。</p>
 </div>
 <h2 id="pseudospectral">擬スペクトル法: 微分はフーリエ空間、積は実空間</h2>
 <p>拡散が例外的に簡単なのは、方程式が線形だからである。移流方程式 <span class="arithmatex">\(\partial_t u+c\,\partial_x u=0\)</span> も <span class="arithmatex">\(c\)</span> が定数なら同様に <span class="arithmatex">\(\hat u_k(t)=\hat u_k(0)e^{-\mathrm{i}ckt}\)</span> と解けるが、<span class="arithmatex">\(c\)</span> が <span class="arithmatex">\(u\)</span> 自身になった途端（バーガース方程式 <span class="arithmatex">\(\partial_t u+u\,\partial_x u=\nu \partial_x^2 u\)</span>）、<span class="arithmatex">\(u\,\partial_x u\)</span> のフーリエ係数は</p>
@@ -3710,7 +3744,7 @@
 <div class="arithmatex">\[
 \lvert\lambda\rvert_{\max} = \nu\left(\frac{N}{2}\right)^2 = \frac{\nu N^2}{4}
 \]</div>
-<p>一方、最小は <span class="arithmatex">\(k=1\)</span> の <span class="arithmatex">\(\nu\)</span> である。<strong>固有値の比は <span class="arithmatex">\(N^2/4\)</span></strong> ——<span class="arithmatex">\(N=256\)</span> なら <span class="arithmatex">\(16384\)</span> 倍で、<a href="../../week06/systems/#stiffness">第6回の意味で完全に硬い問題</a>である。陽的に解こうとすると、<a href="../../week06/absolute-stability/#real-axis">RK4 の実軸上の限界 <span class="arithmatex">\(-2.7853\)</span></a> から</p>
+<p>一方、最小は <span class="arithmatex">\(k=1\)</span> の <span class="arithmatex">\(\nu\)</span> である。<strong>固有値の比は <span class="arithmatex">\(N^2/4\)</span></strong> ——<span class="arithmatex">\(N=256\)</span> なら <span class="arithmatex">\(16384\)</span> 倍で、<a href="../../week06/systems/#stiffness">第6回の意味で完全に硬い問題</a>である。陽的に解こうとすると、<a href="../../week06/absolute-stability/#rk">RK4 の実軸上の限界 <span class="arithmatex">\(-2.7853\)</span></a> から</p>
 <div class="arithmatex">\[
 \Delta t \le \frac{2.7853}{\nu N^2/4} = \frac{11.14}{\nu N^2}
 \]</div>
@@ -3723,6 +3757,23 @@
 </ul>
 <p><span class="arithmatex">\(2.47\times0.718=1.77\)</span> ——「硬さ」だけを比べれば <span class="arithmatex">\(2.47\)</span> 倍だが、<strong>実際に使える <span class="arithmatex">\(\Delta t\)</span> の比は時間積分の選び方まで込みで決まる</strong>。同じ RK4 どうしで比べれば、比はそのまま <span class="arithmatex">\(2.47\)</span> になる。</p>
 <p>だから実際の擬スペクトル計算では、<strong>線形の拡散項だけを陰的あるいは厳密に扱い、非線形項を陽的に進める</strong>のが定石である。フーリエ空間では拡散項は対角なので、陰的に扱っても連立方程式を解く必要がない（割り算1回で済む）——第9回で三重対角行列を解いた手間すら不要である。演習4のバーガース方程式では、この使い分けをしない素朴な陽解法で <span class="arithmatex">\(\Delta t\)</span> を走査し、限界がちょうど <span class="arithmatex">\(2.7853/(\nu(N/2)^2)\)</span> に一致することを確認する。</p>
+<h3 id="integrating-factor">積分因子法</h3>
+<p>バーガース方程式をフーリエ空間で書くと、各 <span class="arithmatex">\(k\)</span> について</p>
+<div class="arithmatex">\[
+\frac{d\hat u_k}{dt} = -\nu k^2\,\hat u_k + \hat N_k,
+\qquad
+\hat N_k = -\widehat{(u\,\partial_x u)}_k
+\]</div>
+<p>となる。右辺の第1項が硬い線形項である。両辺に <span class="arithmatex">\(e^{\nu k^2t}\)</span> を掛けると、積の微分から</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\left(e^{\nu k^2t}\,\hat u_k\right) = e^{\nu k^2t}\,\hat N_k
+\]</div>
+<p>となり、硬い線形項が式から消える。この <span class="arithmatex">\(e^{\nu k^2t}\)</span> を<strong>積分因子</strong>と呼び、<span class="arithmatex">\(e^{\nu k^2t}\hat u_k\)</span> を未知数にして右辺を陽的に進めるのが<strong>積分因子法</strong>である。前進オイラー法で進めると、1ステップは</p>
+<div class="arithmatex">\[
+\hat u_k^{n+1} = e^{-\nu k^2\Delta t}\left(\hat u_k^{n} + \Delta t\,\hat N_k^{n}\right)
+\]</div>
+<p>になる。拡散の効果は <span class="arithmatex">\(0&lt;e^{-\nu k^2\Delta t}\le1\)</span> を掛けるだけなので、拡散項からは増幅が起きず、上の <span class="arithmatex">\(\Delta t\le11.14/(\nu N^2)\)</span> の制約は消える。残る制約は、陽的に進める非線形項（移流）の安定性と、精度である。RK4 でも、<span class="arithmatex">\(e^{\nu k^2t}\hat u_k\)</span> を未知数にして進めれば同じである。</p>
+<p>ただし変換後の右辺 <span class="arithmatex">\(e^{\nu k^2t}\hat N_k\)</span> は高波数ほど速く変わるので、積分因子法は同じ <span class="arithmatex">\(\Delta t\)</span> でも誤差が大きくなりやすい。これを改良したのが、<a href="#time-error">上で触れた</a>指数積分法の一つ、指数時間差分（ETD）法である（S. M. Cox and P. C. Matthews, <em>J. Comput. Phys.</em> <strong>176</strong>, 430 (2002)）。</p>
 <h2 id="comparison">差分法との使い分け</h2>
 <table>
 <thead>

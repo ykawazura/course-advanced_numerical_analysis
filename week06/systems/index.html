@@ -3588,13 +3588,13 @@
 <div class="arithmatex">\[
 \mathbf{y}' = A\mathbf{y}, \qquad \mathbf{y}\in\mathbb{R}^m
 \]</div>
-<p>を考える。<span class="arithmatex">\(A\)</span> が対角化可能で固有値 <span class="arithmatex">\(\lambda_1,\dots,\lambda_m\)</span>、固有ベクトル行列 <span class="arithmatex">\(V\)</span> をもつとき、<span class="arithmatex">\(A=V\Lambda V^{-1}\)</span>（<span class="arithmatex">\(\Lambda=\mathrm{diag}(\lambda_i)\)</span>）と書ける。変数変換 <span class="arithmatex">\(\mathbf{w}=V^{-1}\mathbf{y}\)</span> を施すと、</p>
+<p>を考える。<span class="arithmatex">\(A\)</span> が対角化可能で固有値 <span class="arithmatex">\(\lambda_1,\dots,\lambda_m\)</span>、固有ベクトル行列 <span class="arithmatex">\(V\)</span> をもつとき、<span class="arithmatex">\(A=V\Lambda V^{-1}\)</span>（<span class="arithmatex">\(\Lambda=\mathrm{diag}(\lambda_i)\)</span>）と書ける。<span class="arithmatex">\(\mathbf{w}=V^{-1}\mathbf{y}\)</span> と変数を変えると、</p>
 <div class="arithmatex">\[
 \mathbf{w}' = V^{-1}A V\,\mathbf{w} = \Lambda\mathbf{w}
 \quad\Longleftrightarrow\quad
 w_i' = \lambda_i w_i \quad (i=1,\dots,m).
 \]</div>
-<p>つまり連立系は、各固有値ごとの<strong>独立なテスト方程式</strong> <span class="arithmatex">\(w_i'=\lambda_i w_i\)</span> に分解される。1段法の数値解も同じ変換で各成分が <span class="arithmatex">\(w_i^{(n+1)}=R(z_i)\,w_i^{(n)}\)</span>（<span class="arithmatex">\(z_i=h\lambda_i\)</span>）となるから、</p>
+<p>つまり連立系は、各固有値ごとの<strong>独立なテスト方程式</strong> <span class="arithmatex">\(w_i'=\lambda_i w_i\)</span> に分かれる。1段法の数値解も同じ変換で各成分が <span class="arithmatex">\(w_i^{(n+1)}=R(z_i)\,w_i^{(n)}\)</span>（<span class="arithmatex">\(z_i=h\lambda_i\)</span>）となるから、</p>
 <div class="admonition note">
 <p class="admonition-title">連立系の絶対安定条件</p>
 <p>連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> を1段法で安定に解くには、<strong>すべての</strong> 固有値について <span class="arithmatex">\(z_i=h\lambda_i\)</span> が絶対安定領域に入っていなければならない。一つでも領域の外に出れば、その成分が発散して数値解全体を汚す。</p>
@@ -3605,47 +3605,70 @@ w_i' = \lambda_i w_i \quad (i=1,\dots,m).
 A=\begin{pmatrix}-50.5 &amp; 49.5\\[2pt] 49.5 &amp; -50.5\end{pmatrix},
 \qquad \mathbf{y}(0)=\begin{pmatrix}2\\0\end{pmatrix}.
 \]</div>
-<p>この <span class="arithmatex">\(A\)</span> の固有値は <span class="arithmatex">\(\lambda_1=-1\)</span> と <span class="arithmatex">\(\lambda_2=-100\)</span> で、固有ベクトルはそれぞれ <span class="arithmatex">\((1,1)^\top,\ (1,-1)^\top\)</span>。厳密解は</p>
+<p>この <span class="arithmatex">\(A\)</span> の固有値は <span class="arithmatex">\(\lambda_1=-1\)</span> と <span class="arithmatex">\(\lambda_2=-100\)</span> で、固有ベクトルはそれぞれ <span class="arithmatex">\((1,1)^\top\)</span>、<span class="arithmatex">\((1,-1)^\top\)</span> である。厳密解は</p>
 <div class="arithmatex">\[
 y_1(t)=e^{-t}+e^{-100t},\qquad y_2(t)=e^{-t}-e^{-100t}
 \]</div>
-<p>である。<span class="arithmatex">\(e^{-100t}\)</span> の成分（<strong>速い成分</strong>）は <span class="arithmatex">\(t\approx0.05\)</span> でほぼ消え、以降は <span class="arithmatex">\(e^{-t}\)</span> の成分（<strong>遅い成分</strong>）だけがゆっくり減衰する。固有値の実部の大きさの比を <strong>剛比</strong>（stiffness ratio）と呼ぶ。</p>
+<p>である。<span class="arithmatex">\(e^{-100t}\)</span> の成分（<strong>速い成分</strong>）は <span class="arithmatex">\(t\approx0.05\)</span> でほぼ消え、以降は <span class="arithmatex">\(e^{-t}\)</span> の成分（<strong>遅い成分</strong>）だけがゆっくり減衰する。</p>
+<p>固有値の実部の大きさの比を <strong>剛比</strong>（stiffness ratio）と呼ぶ。</p>
 <div class="arithmatex">\[
 \frac{\max_i|\mathrm{Re}\,\lambda_i|}{\min_i|\mathrm{Re}\,\lambda_i|}=\frac{100}{1}=100
 \]</div>
-<p>剛比が大きいほど系は「硬い」。</p>
+<p>剛比が大きいほど系は硬い。</p>
 <h2 id="essence">硬さの本質——なぜ陽解法が縛られるのか</h2>
-<p>ここが硬い問題の核心である。前進オイラー法で安定に解くには、<strong>両方</strong>の <span class="arithmatex">\(z_i=h\lambda_i\)</span> が安定領域 <span class="arithmatex">\(-2\le z_i\le0\)</span> に入る必要がある。遅い成分（<span class="arithmatex">\(\lambda_1=-1\)</span>）は <span class="arithmatex">\(h\le2\)</span> で十分だが、速い成分（<span class="arithmatex">\(\lambda_2=-100\)</span>）は</p>
+<p>ここが硬い問題の核心である。前進オイラー法で安定に解くには、<strong>両方</strong>の <span class="arithmatex">\(z_i=h\lambda_i\)</span> が安定領域 <span class="arithmatex">\(-2\le z_i\le0\)</span> に入る必要がある。遅い成分（<span class="arithmatex">\(\lambda_1=-1\)</span>）は <span class="arithmatex">\(h\le2\)</span> で足りるが、速い成分（<span class="arithmatex">\(\lambda_2=-100\)</span>）は</p>
 <div class="arithmatex">\[
 h\le \frac{2}{|\lambda_2|}=\frac{2}{100}=0.02
 \]</div>
-<p>を要求する。問題は、<strong>速い成分が <span class="arithmatex">\(t\approx0.05\)</span> で実質ゼロになった後も、この刻み制約が消えない</strong>ことである。解の中身はもう遅い成分だけなのに、安定性のためだけに <span class="arithmatex">\(h\le0.02\)</span> という細かい刻みを最後まで強いられる。これが硬さの本質であり、A安定な陰的解法（後退オイラー法・台形則）が必要になる理由である。陰的解法なら、速い成分の <span class="arithmatex">\(z\)</span> も必ず安定領域（左半平面）に入るので、刻み幅は<strong>遅い成分の精度</strong>だけで選べる。</p>
+<p>を要求する。問題は、<strong>速い成分が <span class="arithmatex">\(t\approx0.05\)</span> で実質ゼロになった後も、この刻みの制約が消えない</strong>ことである。解の中身はもう遅い成分だけなのに、安定性のためだけに <span class="arithmatex">\(h\le0.02\)</span> という細かい刻みを最後まで強いられる。数値解の速い成分は厳密にはゼロでなく、丸め誤差としても毎ステップ入り込む。<span class="arithmatex">\(h&gt;0.02\)</span> に上げると、その残りが毎ステップ <span class="arithmatex">\(|1+h\lambda_2|=|1-100h|&gt;1\)</span> 倍に増え、やがて解を壊す（<span class="arithmatex">\(h=0.025\)</span> なら 1.5 倍で、丸め誤差の <span class="arithmatex">\(10^{-16}\)</span> からでも約 80 ステップで <span class="arithmatex">\(10^{-2}\)</span> に達する）。</p>
+<figure>
+  <img alt="硬さの本質：2つの成分の時間スケールと刻み" src="../img/stiff_timescale.png" width="760" />
+<br />
+<figcaption>硬さの本質。上：厳密解の2つの成分。速い成分 <span class="arithmatex">\(e^{-100t}\)</span> は <span class="arithmatex">\(t\approx0.05\)</span> でほぼ消え（<span class="arithmatex">\(e^{-5}\approx0.007\)</span>）、以降は遅い成分 <span class="arithmatex">\(e^{-t}\)</span> だけが残る。下：<span class="arithmatex">\(0\le t\le2\)</span> を進む刻み。前進オイラー法は安定のために <span class="arithmatex">\(h\le0.02\)</span>（100 ステップ以上）を最後まで強いられる。後退オイラー法は遅い成分の精度だけで刻みを選べる（図は <span class="arithmatex">\(h=0.1\)</span> の 20 ステップ）。</figcaption>
+</figure>
+<p>これが硬さの本質である。A安定な陰的解法（後退オイラー法・台形則）なら、速い成分の <span class="arithmatex">\(z\)</span> も必ず左半平面（安定領域）に入るので、刻み幅は<strong>遅い成分の精度</strong>だけで選べる。</p>
 <figure>
   <img alt="硬い連立系の数値解" src="../img/stiff_system.png" width="820" />
 <br />
-<figcaption>硬い連立系（固有値 <span class="arithmatex">\(-1,-100\)</span>、剛比 <span class="arithmatex">\(100\)</span>）の数値解。左：前進オイラー法は <span class="arithmatex">\(h=0.025\)</span>（<span class="arithmatex">\(h\lambda_2=-2.5\)</span> で安定領域外）だと速い成分が振動・発散して <span class="arithmatex">\(y_1,y_2\)</span> ともに暴走するが、<span class="arithmatex">\(h=0.015\)</span>（<span class="arithmatex">\(h\lambda_2=-1.5\)</span>）なら安定。右：後退オイラー法は同じ <span class="arithmatex">\(h=0.025\)</span> でも各ステップで <span class="arithmatex">\(2\times2\)</span> 線形系を解いて無条件に安定で、厳密解（<span class="arithmatex">\(e^{-t}\)</span>）に乗る。縦軸は左図のみ symlog。</figcaption>
+<figcaption>硬い連立系（固有値 <span class="arithmatex">\(-1,-100\)</span>、剛比 <span class="arithmatex">\(100\)</span>）の数値解。左：<span class="arithmatex">\(z=h\lambda_i\)</span> と2つの安定領域。<span class="arithmatex">\(h=0.025\)</span> の <span class="arithmatex">\(h\lambda_2=-2.5\)</span> は前進オイラー法の円 <span class="arithmatex">\(|1+z|\le1\)</span> の外、後退オイラー法の領域 <span class="arithmatex">\(|1-z|\ge1\)</span> の内にある。<span class="arithmatex">\(h=0.015\)</span> の <span class="arithmatex">\(h\lambda_2=-1.5\)</span> は円の内にある。<span class="arithmatex">\(h\lambda_1\)</span>（<span class="arithmatex">\(-0.025\)</span> と <span class="arithmatex">\(-0.015\)</span>）は原点のすぐ左にあり、どちらの領域にも入る。中：前進オイラー法は <span class="arithmatex">\(h=0.025\)</span> だと速い成分が振動・発散し、<span class="arithmatex">\(t=0.4\)</span> で <span class="arithmatex">\(y_1\approx658\)</span> まで暴走するが、<span class="arithmatex">\(h=0.015\)</span> なら安定。右：後退オイラー法は同じ <span class="arithmatex">\(h=0.025\)</span> でも各ステップで <span class="arithmatex">\(2\times2\)</span> 線形系を解いて無条件に安定で、厳密解に乗る。縦軸は中図のみ symlog。</figcaption>
 </figure>
 <h2 id="implicit-solve">陰的解法を連立系に使う——第3回のガウス消去</h2>
-<p>連立系に後退オイラー法を適用すると、</p>
+<p>連立系に後退オイラー法を当てると、</p>
 <div class="arithmatex">\[
 \mathbf{y}_{n+1}=\mathbf{y}_n+hA\mathbf{y}_{n+1}
 \quad\Longleftrightarrow\quad
 (I-hA)\,\mathbf{y}_{n+1}=\mathbf{y}_n.
 \]</div>
-<p>すなわち<strong>毎ステップ、係数行列 <span class="arithmatex">\(I-hA\)</span> をもつ連立1次方程式を解く</strong>ことになる。これは第3回のガウス消去や補足（多変数ニュートン法）の線形ソルバそのものである。本ページのサンプルは <span class="arithmatex">\(2\times2\)</span> だが、<a href="../../week03/direct/#sample">第3回のサンプル</a>の部分ピボット選択つきガウス消去 <code>gauss_solve</code> に <span class="arithmatex">\(n=2\)</span> を渡してそのまま使う。同じ関数が一般の <span class="arithmatex">\(m\times m\)</span> にも使える。</p>
+<p>すなわち<strong>毎ステップ、係数行列 <span class="arithmatex">\(I-hA\)</span> の連立1次方程式を解く</strong>。これは第3回のガウス消去や補足（多変数ニュートン法）の線形ソルバそのものである。本ページのサンプルは <span class="arithmatex">\(2\times2\)</span> だが、<a href="../../week03/direct/#sample">第3回のサンプル</a>の部分ピボット選択つきガウス消去 <code>gauss_solve</code> に <span class="arithmatex">\(n=2\)</span> を渡せばそのまま使え、一般の <span class="arithmatex">\(m\times m\)</span> にも使える。</p>
 <div class="admonition note">
 <p class="admonition-title">非線形系の場合</p>
 <p>右辺が非線形 <span class="arithmatex">\(\mathbf{y}'=\mathbf{f}(t,\mathbf{y})\)</span> なら、後退オイラー法の式 <span class="arithmatex">\(\mathbf{y}_{n+1}-\mathbf{y}_n-h\mathbf{f}(t_{n+1},\mathbf{y}_{n+1})=\mathbf{0}\)</span> を未知ベクトル <span class="arithmatex">\(\mathbf{y}_{n+1}\)</span> について<strong>ニュートン法</strong>（補足の多変数ニュートン法）で解く。そのヤコビアンは <span class="arithmatex">\(I-h\,\partial\mathbf{f}/\partial\mathbf{y}\)</span> であり、各反復でこの行列の連立系をガウス消去で解く。陰的解法・連立系ソルバ・ニュートン法が一つに結びつく。</p>
 </div>
+<p>硬さへの対処は陰的解法だけではない。右辺を硬い線形部分と残りに分けて <span class="arithmatex">\(\mathbf{y}'=L\mathbf{y}+\mathbf{N}(\mathbf{y})\)</span> と書け、<span class="arithmatex">\(e^{hL}\)</span> が安く求まるなら、線形部分は <span class="arithmatex">\(e^{hL}\)</span> を掛けて厳密に進め、残りだけを陽的に進めればよい。これを<strong>積分因子法</strong>（integrating factor method）と呼ぶ。<span class="arithmatex">\(L\)</span> が対角になるフーリエ空間なら <span class="arithmatex">\(e^{hL}\)</span> も対角成分ごとの指数関数で済むので、<a href="../../week13/applications/#integrating-factor">第13回のスペクトル法</a>で使う。一般の行列 <span class="arithmatex">\(L\)</span> では <span class="arithmatex">\(e^{hL}\)</span> の計算が重い。しかも <span class="arithmatex">\(L\)</span> が三重対角のような疎行列でも <span class="arithmatex">\(e^{hL}\)</span> は密行列になるので、陰的解法で連立方程式を解くほうが安いことが多い。本ページの例題 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> は全体が線形なので、<span class="arithmatex">\(e^{hA}\)</span> を掛けるだけで厳密解になる。</p>
 <h2 id="other">他の手法の安定性（紹介）</h2>
 <p>本回は1段法の絶対安定領域・A安定・L安定を主役にしたが、多段法（第5回）にも安定性の理論がある。ここでは概念の紹介にとどめる。</p>
+<p>まず<strong>多段法の絶対安定領域</strong>である。アダムス・バッシュフォース法などの線形多段法もテスト方程式 <span class="arithmatex">\(y'=\lambda y\)</span> に当てると、<span class="arithmatex">\(y_{n+1}\)</span> を過去の数点から作る線形漸化式になる。たとえば <a href="../../week05/multistep/">AB4</a> は <span class="arithmatex">\(y_{n+1}=y_n+\frac{z}{24}\left(55y_n-59y_{n-1}+37y_{n-2}-9y_{n-3}\right)\)</span> となり、<span class="arithmatex">\(y_n=\zeta^n\)</span> とおくと特性多項式</p>
+<div class="arithmatex">\[
+\zeta^4-\zeta^3-\frac{z}{24}\left(55\zeta^3-59\zeta^2+37\zeta-9\right)=0
+\]</div>
+<p>を得る。この4根の絶対値がすべて1以下になる <span class="arithmatex">\(z\)</span> の集合が、AB4 の絶対安定領域である（1段法の <span class="arithmatex">\(|R(z)|\le1\)</span> にあたる）。多段法の絶対安定領域は、同じ次数の RK 法に比べて<strong>狭い傾向</strong>があり、高次の陽的多段法ほど小さくなりやすい。同じ4次の RK4 と AB4 で比べると、次の図のようになる。</p>
+<figure>
+  <img alt="RK4 と AB4 の絶対安定領域" src="../img/ab4_rk4_regions.png" width="520" />
+<br />
+<figcaption>同じ4次の RK4（紫）と AB4（橙）の絶対安定領域。右上は原点付近の拡大である。RK4 は <span class="arithmatex">\(|R_4(z)|\le1\)</span> の領域で、AB4 は各 <span class="arithmatex">\(z\)</span> で上の特性多項式の4根を数値的に求め、絶対値の最大が1以下になる点を塗った。実軸上の安定限界は RK4 が <span class="arithmatex">\(z\approx-2.79\)</span>、AB4 が <span class="arithmatex">\(z=-0.3\)</span> である。</figcaption>
+</figure>
 <ul>
-<li><strong>多段法の絶対安定領域</strong>：アダムス・バッシュフォース法などの線形多段法にも絶対安定領域が定義できるが、同じ次数の RK 法に比べて<strong>狭い傾向</strong>がある。高次の陽的多段法ほど領域は小さくなりやすい。</li>
-<li><strong>ゼロ安定性（zero-stability）と根条件（root condition）</strong>：多段法には絶対安定性とは別の安定性概念がある。<span class="arithmatex">\(h\to0\)</span> の極限で、過去の数点に含まれる誤差が増幅せずに抑えられるか、という性質で、手法に付随する<strong>特性多項式の根がすべて単位円の内部か、円周上の単根である</strong>こと（根条件）で判定する。1段法では自動的に満たされるが、多段法では成り立たない手法もある。</li>
-<li><strong>ダールキストの同値定理（Dahlquist equivalence theorem）</strong>：線形多段法が <strong>収束する</strong> ための必要十分条件は、<strong>一致性（consistency, 局所的に正しい）かつ ゼロ安定性</strong> である、という基本定理。「いくら高次でもゼロ安定でなければ収束しない」ことを保証する。本講義ではこの定理の名前と主張の紹介までとし、証明・境界軌跡（boundary locus）による安定領域の作図・ダールキストの障壁定理は扱わない。</li>
+<li>実軸上の安定限界は RK4 が <span class="arithmatex">\(z\approx-2.785\)</span>、AB4 が <span class="arithmatex">\(z=-0.3\)</span> で、AB4 は約 9 分の 1 しかない。虚軸上も、RK4 は <span class="arithmatex">\(|\mathrm{Im}\,z|\le2\sqrt2\approx2.83\)</span>、AB4 は <span class="arithmatex">\(0.43\)</span> までである。</li>
+<li>RK4 は1ステップに <span class="arithmatex">\(f\)</span> を4回、AB4 は1回評価する。評価1回あたりの実軸上の限界に直すと、RK4 は <span class="arithmatex">\(2.785/4\approx0.70\)</span>、AB4 は <span class="arithmatex">\(0.3\)</span> である。<strong>安定性が <span class="arithmatex">\(h\)</span> を決める問題では、RK4 の評価回数は AB4 の約 2.3 分の 1 で済む</strong>。</li>
+<li>逆に、<strong>精度が <span class="arithmatex">\(h\)</span> を決める問題では AB4 が有利</strong>である。<a href="../../week05/exercises/#exercise">第5回の演習</a>（例題1）では、誤差 <span class="arithmatex">\(10^{-8}\)</span> に達するまでの評価回数が AB4 で 400 回、RK4 で 800 回だった。</li>
+</ul>
+<p>残る2つは、多段法に特有のゼロ安定性と、それにかかわる定理である。</p>
+<ul>
+<li><strong>ゼロ安定性（zero-stability）と根条件（root condition）</strong>：多段法には絶対安定性とは別の安定性概念がある。<span class="arithmatex">\(h\to0\)</span> の極限で、過去の数点に含まれる誤差が増幅せずに抑えられるか、という性質で、<strong><span class="arithmatex">\(z=0\)</span> とおいた特性多項式（AB4 なら <span class="arithmatex">\(\zeta^4-\zeta^3\)</span>）の根がすべて単位円の内部か、円周上の単根である</strong>こと（根条件）で判定する。1段法では自動的に満たされるが、多段法では成り立たない手法もある。</li>
+<li><strong>ダールキストの同値定理（Dahlquist equivalence theorem）</strong>：線形多段法が <strong>収束する</strong> のは、<strong>一致性</strong>（consistency, 局所的に正しい）と<strong>ゼロ安定性</strong>をともに満たすとき、かつそのときに限る。「いくら高次でもゼロ安定でなければ収束しない」ことを保証する。本講義ではこの定理の名前と主張の紹介にとどめ、証明・境界軌跡（boundary locus）による安定領域の作図・ダールキストの障壁定理は扱わない。</li>
 </ul>
 <h2 id="sample">サンプルコード</h2>
-<p>硬い連立系を、前進オイラー法（<span class="arithmatex">\(h=0.025\)</span> で発散・<span class="arithmatex">\(h=0.015\)</span> で安定）と後退オイラー法（<span class="arithmatex">\(h=0.025\)</span> でも各ステップ <span class="arithmatex">\(2\times2\)</span> ガウス消去で安定）で解く。前進オイラー法の1ステップは<a href="../../week04/runge-kutta/#system">第4回の調和振動子のプログラム</a>の <code>euler_step</code> をそのまま使い、右辺 <code>rhs</code> だけを <span class="arithmatex">\(A\mathbf{y}\)</span> に替える。後退オイラー法の1ステップは関数 <code>backward_step</code> に切り出す。連立1次方程式は<a href="#implicit-solve">上で述べた</a>とおり <code>gauss_solve</code> で解くが、この関数は係数行列と右辺を書き換えるので、毎ステップ <span class="arithmatex">\(I-hA\)</span> と <span class="arithmatex">\(\mathbf{y}_n\)</span> の写しを作って渡す。ステップ数は<a href="../absolute-stability/#sample">絶対安定性のサンプル</a>の <code>steps</code> で求める（<span class="arithmatex">\(h=0.015\)</span> は <span class="arithmatex">\(T=0.4\)</span> を割り切らず、<span class="arithmatex">\(N=27\)</span> で <span class="arithmatex">\(t=0.405\)</span> まで進む）。</p>
+<p>硬い連立系を、前進オイラー法（<span class="arithmatex">\(h=0.025\)</span> で発散・<span class="arithmatex">\(h=0.015\)</span> で安定）と後退オイラー法（<span class="arithmatex">\(h=0.025\)</span> でも各ステップ <span class="arithmatex">\(2\times2\)</span> ガウス消去で安定）で解く。前進オイラー法の1ステップは<a href="../../week04/runge-kutta/#system">第4回の調和振動子のプログラム</a>の <code>euler_step</code> をそのまま写し、右辺 <code>rhs</code> だけを <span class="arithmatex">\(A\mathbf{y}\)</span> に替える。後退オイラー法の1ステップは関数 <code>backward_step</code> に切り出す。連立1次方程式は<a href="#implicit-solve">上で述べた</a>とおり <code>gauss_solve</code> で解くが、この関数は係数行列と右辺を書き換えるので、毎ステップ <span class="arithmatex">\(I-hA\)</span> と <span class="arithmatex">\(\mathbf{y}_n\)</span> の写しを作って渡す。ステップ数は<a href="../absolute-stability/#sample">絶対安定性のサンプル</a>の <code>steps</code> で求める（<span class="arithmatex">\(h=0.015\)</span> は <span class="arithmatex">\(T=0.4\)</span> を割り切らず、<span class="arithmatex">\(N=27\)</span> で <span class="arithmatex">\(t=0.405\)</span> まで進む）。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -3783,7 +3806,7 @@ h\le \frac{2}{|\lambda_2|}=\frac{2}{100}=0.02
 <a id="__codelineno-0-135" name="__codelineno-0-135" href="#__codelineno-0-135"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-0-136" name="__codelineno-0-136" href="#__codelineno-0-136"></a><span class="p">}</span>
 </code></pre></div>
-<p>コンパイルと実行：</p>
+<p>コンパイル・実行:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cc<span class="w"> </span>-O2<span class="w"> </span>-Wall<span class="w"> </span>-o<span class="w"> </span>systems<span class="w"> </span>systems.c<span class="w"> </span>-lm
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./systems
 </code></pre></div>
@@ -3828,9 +3851,9 @@ h\le \frac{2}{|\lambda_2|}=\frac{2}{100}=0.02
 <a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>0.350     7.077272e-01    7.077272e-01   7.0469e-01   7.0469e-01
 <a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>0.400     6.736249e-01    6.736249e-01   6.7032e-01   6.7032e-01
 </code></pre></div>
-<p>前進オイラー法は <span class="arithmatex">\(h=0.025\)</span>（速い固有値で <span class="arithmatex">\(h\lambda_2=-2.5&lt;-2\)</span>）だと数値解が振動しながら指数的に増大し、<span class="arithmatex">\(t=0.4\)</span> で <span class="arithmatex">\(y_1\approx658\)</span> まで暴走する。<span class="arithmatex">\(h=0.015\)</span>（<span class="arithmatex">\(h\lambda_2=-1.5\)</span>）に下げれば安定領域に入り厳密解に乗る。一方、後退オイラー法は <span class="arithmatex">\(h=0.025\)</span> のままでも毎ステップ <span class="arithmatex">\(2\times2\)</span> 系をガウス消去で解くことで安定で、終端 <span class="arithmatex">\(y_1=0.6736\)</span> は厳密値 <span class="arithmatex">\(0.6703\)</span> とよく一致する。<strong>速い成分が早々に消えても陽解法は刻みを縛られ続け、陰的解法はそれから解放される</strong>——硬い問題で A安定が必須である理由が、この数値で確かめられた。</p>
+<p>前進オイラー法は <span class="arithmatex">\(h=0.025\)</span>（速い固有値で <span class="arithmatex">\(h\lambda_2=-2.5&lt;-2\)</span>）だと数値解が振動しながら指数的に増大し、<span class="arithmatex">\(t=0.4\)</span> で <span class="arithmatex">\(y_1\approx658\)</span> まで暴走する。<span class="arithmatex">\(h=0.015\)</span>（<span class="arithmatex">\(h\lambda_2=-1.5\)</span>）に下げれば安定領域に入り厳密解に乗る。一方、後退オイラー法は <span class="arithmatex">\(h=0.025\)</span> のままでも毎ステップ <span class="arithmatex">\(2\times2\)</span> 系をガウス消去で解くことで安定で、終端 <span class="arithmatex">\(y_1=0.6736\)</span> は厳密値 <span class="arithmatex">\(0.6703\)</span> とよく一致する。<strong>速い成分が早々に消えても陽解法は刻みを縛られ続け、陰的解法はそれから解放される</strong>。硬い問題に A安定な陰的解法を使う理由が、この数値で確かめられた。</p>
 <h2 id="plot">可視化</h2>
-<p><code>systems.c</code> は前進オイラー法の2本を <code>systems_fe.dat</code>（1列目が <span class="arithmatex">\(h\)</span>、以下 <span class="arithmatex">\(t,\ y_1,\ y_2,\ y_1\)</span> 厳密<span class="arithmatex">\(,\ y_2\)</span> 厳密）に、後退オイラー法を <code>systems_be.dat</code> に書き出す。標準出力は8点おきの抜粋だが、ファイルには<strong>全ステップ</strong>が入っているので、発散の立ち上がりまで追える。</p>
+<p><code>systems.c</code> は前進オイラー法の2本を <code>systems_fe.dat</code>（1列目が <span class="arithmatex">\(h\)</span>、以下 <span class="arithmatex">\(t,\ y_1,\ y_2,\ y_1\)</span> 厳密<span class="arithmatex">\(,\ y_2\)</span> 厳密）に、後退オイラー法を <code>systems_be.dat</code> に書き出す。標準出力は全区間をおよそ8等分した点だけの抜粋だが、ファイルには<strong>全ステップ</strong>が入っているので、発散の立ち上がりまで追える。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -3871,11 +3894,12 @@ h\le \frac{2}{|\lambda_2|}=\frac{2}{100}=0.02
 <p>左の縦軸は symlog（<span class="arithmatex">\(|y_1|\le1\)</span> は線形、その外は対数）にしてある。こうしないと <span class="arithmatex">\(h=0.025\)</span> の発散（<span class="arithmatex">\(t=0.4\)</span> で <span class="arithmatex">\(650\)</span> 超）に潰されて、<span class="arithmatex">\(h=0.015\)</span> の解と厳密解が同じ線に見えてしまう。右は同じ <span class="arithmatex">\(h=0.025\)</span> の後退オイラー法で、<span class="arithmatex">\(t\approx0.05\)</span> で速い成分が消えた後は <span class="arithmatex">\(y_1,y_2\)</span> がともに <span class="arithmatex">\(e^{-t}\)</span> に重なる。</p>
 <h2 id="_2">まとめ</h2>
 <ul>
-<li>線形連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> は対角化で各固有値の独立なテスト方程式 <span class="arithmatex">\(w_i'=\lambda_i w_i\)</span> に分解され、安定には<strong>すべての</strong> <span class="arithmatex">\(z_i=h\lambda_i\)</span> が安定領域に入る必要がある。</li>
-<li><strong>剛比</strong> <span class="arithmatex">\(\max|\mathrm{Re}\,\lambda_i|/\min|\mathrm{Re}\,\lambda_i|\)</span> が大きい <strong>硬い問題</strong> では、速い成分が消えた後も陽解法はその固有値の安定限界（例題では <span class="arithmatex">\(h\le0.02\)</span>）に刻みを縛られる。A安定な陰的解法を使えば刻みは遅い成分の精度だけで選べる。</li>
-<li>連立系の陰的解法は、毎ステップ <span class="arithmatex">\((I-hA)\mathbf{y}_{n+1}=\mathbf{y}_n\)</span> という<strong>連立1次方程式を解く</strong>こと（第3回）。非線形ならニュートン法（補足の多変数ニュートン法）でヤコビアン <span class="arithmatex">\(I-h\,\partial\mathbf{f}/\partial\mathbf{y}\)</span> の系を解く。</li>
+<li>線形連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> は対角化で各固有値の独立なテスト方程式 <span class="arithmatex">\(w_i'=\lambda_i w_i\)</span> に分かれ、安定には<strong>すべての</strong> <span class="arithmatex">\(z_i=h\lambda_i\)</span> が安定領域に入る必要がある。</li>
+<li><strong>剛比</strong> <span class="arithmatex">\(\max|\mathrm{Re}\,\lambda_i|/\min|\mathrm{Re}\,\lambda_i|\)</span> が大きい <strong>硬い問題</strong> では、速い成分が消えた後も陽解法はその固有値の安定限界（例題では <span class="arithmatex">\(h\le0.02\)</span>）に刻みを縛られる。A安定な陰的解法は毎ステップ連立1次方程式を解いてそれを免れ、刻みを遅い成分の精度だけで選べる。</li>
+<li>連立系の陰的解法が毎ステップ解くのは、<span class="arithmatex">\((I-hA)\mathbf{y}_{n+1}=\mathbf{y}_n\)</span> という<strong>連立1次方程式</strong>である（第3回）。非線形ならニュートン法（補足の多変数ニュートン法）でヤコビアン <span class="arithmatex">\(I-h\,\partial\mathbf{f}/\partial\mathbf{y}\)</span> の系を解く。</li>
 <li>多段法には<strong>ゼロ安定性（根条件）</strong>という別の安定性概念があり、<strong>ダールキストの同値定理</strong>「一致性＋ゼロ安定性 ⇔ 収束」が収束を保証する。</li>
-<li>仕上げに <a href="../exercises/">演習問題</a> で、虚軸上の安定性（振動のエネルギー）・RK4 の安定限界・硬い連立系での L安定性と次数の兼ね合いを自分の手で確かめる。</li>
+<li>仕上げに<a href="../exercises/">演習問題</a>で、テスト方程式 <span class="arithmatex">\(y'=-100y\)</span> を RK4 と AB4 で解き、<a href="#other">上</a>の「安定性が <span class="arithmatex">\(h\)</span> を決める問題では、RK4 の評価回数は AB4 の約 2.3 分の 1 で済む」を確かめる。</li>
+<li>次回の<a href="../../week07/">第7回「常微分方程式の境界値問題と固有値問題」</a>では、条件が区間の両端に分かれて課される問題に進む。</li>
 </ul>
 
 

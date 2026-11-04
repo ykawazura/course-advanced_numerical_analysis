@@ -1623,6 +1623,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬さに応じた使い分け
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3510,6 +3521,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        硬さに応じた使い分け
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3540,43 +3562,44 @@
 <h1 id="al">A安定とL安定</h1>
 <p>前ページで、後退オイラー法と台形則の絶対安定領域は左半平面 <span class="arithmatex">\(\mathrm{Re}\,z\le0\)</span> をまるごと含むことを見た。この「左半平面を覆う」性質を正式に名づけ、さらにその中で硬い問題への向き不向きを区別するのが本ページの目的である。</p>
 <h2 id="a-stability">A安定性</h2>
-<p>物理的に意味のある減衰問題では <span class="arithmatex">\(\mathrm{Re}\,\lambda&lt;0\)</span>（厳密解が減衰する）である。このときどんな刻み幅 <span class="arithmatex">\(h&gt;0\)</span> をとっても <span class="arithmatex">\(z=h\lambda\)</span> は左半平面に入る。そこで、</p>
+<p>物理的に意味のある減衰問題では <span class="arithmatex">\(\mathrm{Re}\,\lambda&lt;0\)</span>（厳密解が減衰する）である。このとき、どんな刻み幅 <span class="arithmatex">\(h&gt;0\)</span> をとっても <span class="arithmatex">\(z=h\lambda\)</span> は左半平面に入る。そこで、</p>
 <div class="admonition note">
 <p class="admonition-title">A安定性（A-stability）</p>
-<p>左半平面 <span class="arithmatex">\(\{\,z : \mathrm{Re}\,z\le0\,\}\)</span> が<strong>まるごと</strong>絶対安定領域に含まれるとき、その手法は <strong>A安定</strong> であるという。</p>
+<p>左半平面 <span class="arithmatex">\(\{\,z : \mathrm{Re}\,z\le0\,\}\)</span> が<strong>まるごと</strong>絶対安定領域に含まれるとき、その手法は <strong>A安定</strong>（A-stable）であるという。</p>
 </div>
 <p>A安定な手法は、減衰問題に対して<strong>刻み幅にいっさい制約なく</strong>安定である（数値解が発散しない）。前ページの結果から、</p>
 <ul>
-<li><strong>後退オイラー法</strong>（円板の外側）・<strong>台形則</strong>（左半平面そのもの）は <strong>A安定</strong>。</li>
-<li><strong>前進オイラー法</strong>・<strong>RK 法</strong>などの陽解法は、安定領域が<strong>有界</strong>なので左半平面全体を覆えず、<strong>A安定になり得ない</strong>。</li>
+<li><strong>後退オイラー法</strong>（円板の外側）と<strong>台形則</strong>（左半平面そのもの）は <strong>A安定</strong>。</li>
+<li><strong>前進オイラー法</strong>や <strong>RK 法</strong>などの陽解法は、安定領域が<strong>有界</strong>なので左半平面全体を覆えず、<strong>A安定になり得ない</strong>。</li>
 </ul>
-<p>これは陽解法の本質的な限界である。陽解法では、減衰の速い成分（<span class="arithmatex">\(\lambda\)</span> の実部が大きく負）を安定に扱うために <span class="arithmatex">\(h\)</span> を小さくせざるを得ない。硬い問題で A安定な陰的解法が必要になる理由がここにある（詳しくは<a href="../systems/">連立系のページ</a>）。</p>
+<p>これは陽解法の本質的な限界である。陽解法では、減衰の速い成分（<span class="arithmatex">\(\lambda\)</span> の実部が大きく負）を安定に扱うために <span class="arithmatex">\(h\)</span> を小さくせざるを得ない。硬い問題で A安定な陰的解法が要る理由がここにある（詳しくは<a href="../systems/">連立系のページ</a>）。</p>
 <div class="admonition warning">
 <p class="admonition-title">A安定は「テスト方程式についての」保証である</p>
-<p>A安定性はスカラーのテスト方程式 <span class="arithmatex">\(y'=\lambda y\)</span> を基準に定義されている。連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> に持ち上げられるのは <span class="arithmatex">\(A\)</span> が対角化できる場合で、しかも数値解の大きさは固有ベクトル行列の条件数だけ増幅されうる。<span class="arithmatex">\(A\)</span> が正規行列（対称・反対称など）なら条件数は <span class="arithmatex">\(1\)</span> で額面どおり成り立つが、<strong>強く非正規な行列や非線形問題では、A安定な手法でも大きな <span class="arithmatex">\(h\)</span> で解が一時的に大きく膨らむことがある</strong>。本講義で扱う対称な離散ラプラシアン（<a href="../../week09/stability/#von-neumann">第9回</a>）は正規なので、この心配はない。</p>
+<p>A安定性はスカラーのテスト方程式 <span class="arithmatex">\(y'=\lambda y\)</span> を基準に定義されている。連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> に持ち上げられるのは <span class="arithmatex">\(A\)</span> が対角化できる場合で、しかも数値解の大きさは固有ベクトル行列の条件数だけ増幅されうる。<span class="arithmatex">\(A\)</span> が正規行列（対称・反対称など）なら条件数は <span class="arithmatex">\(1\)</span> で額面どおり成り立つが、<strong>強く非正規な行列や非線形問題では、A安定な手法でも大きな <span class="arithmatex">\(h\)</span> で解が一時的に大きく膨らむことがある</strong>。<a href="../../week09/stability/#von-neumann">第9回</a>の対称な離散ラプラシアンは正規なので、この心配はない。</p>
 </div>
 <h2 id="l-stability">L安定性</h2>
-<p>A安定でも、硬い成分の扱いには差がある。<span class="arithmatex">\(\mathrm{Re}\,\lambda\to-\infty\)</span>（非常に速く減衰する成分）に対し、厳密解 <span class="arithmatex">\(e^{\lambda t}\)</span> は瞬時に <span class="arithmatex">\(0\)</span> になる。数値解がこれをどう近似するかは、<span class="arithmatex">\(z\to-\infty\)</span> での安定関数 <span class="arithmatex">\(R(z)\)</span> の極限で決まる。</p>
+<p>A安定でも、硬い成分の扱いには差がある。<span class="arithmatex">\(\mathrm{Re}\,\lambda\to-\infty\)</span> の成分（非常に速く減衰する成分）では、厳密解 <span class="arithmatex">\(e^{\lambda t}\)</span> は瞬時に <span class="arithmatex">\(0\)</span> になる。数値解がこれをどう近似するかは、<span class="arithmatex">\(z\to-\infty\)</span> での安定関数 <span class="arithmatex">\(R(z)\)</span> の極限で決まる。</p>
 <ul>
 <li><strong>後退オイラー法</strong>：<span class="arithmatex">\(\displaystyle R(z)=\frac{1}{1-z}\ \xrightarrow[z\to-\infty]{}\ 0\)</span></li>
 <li><strong>台形則</strong>：<span class="arithmatex">\(\displaystyle R(z)=\frac{1+z/2}{1-z/2}\ \xrightarrow[z\to-\infty]{}\ -1\)</span></li>
 </ul>
-<p>後退オイラー法は硬い成分を<strong>1ステップでほぼ消す</strong>のに対し、台形則は増幅率が <span class="arithmatex">\(-1\)</span> に近づくため、硬い成分が<strong>符号を交代しながらなかなか減衰しない</strong>。この違いを区別するのが L安定性である。</p>
+<p>後退オイラー法は硬い成分を<strong>1ステップでほぼ消す</strong>。台形則は <span class="arithmatex">\(R\)</span> が <span class="arithmatex">\(-1\)</span> に近づくので、硬い成分が<strong>符号を交代しながらなかなか減衰しない</strong>。この違いを区別するのが L安定性である。</p>
 <div class="admonition note">
 <p class="admonition-title">L安定性（L-stability）</p>
-<p>A安定であり、かつ <span class="arithmatex">\(z\to-\infty\)</span> で <span class="arithmatex">\(R(z)\to0\)</span> となるとき、その手法は <strong>L安定</strong> であるという。</p>
+<p>A安定であり、かつ <span class="arithmatex">\(z\to-\infty\)</span> で <span class="arithmatex">\(R(z)\to0\)</span> となるとき、その手法は <strong>L安定</strong>（L-stable）であるという。</p>
 <ul>
-<li><strong>後退オイラー法</strong>：A安定かつ <span class="arithmatex">\(R\to0\)</span> → <strong>L安定</strong>。</li>
-<li><strong>台形則</strong>：A安定だが <span class="arithmatex">\(R\to-1\)</span>（<span class="arithmatex">\(|R|\to1\)</span>）→ <strong>L安定ではない</strong>。</li>
+<li><strong>後退オイラー法</strong>：A安定かつ <span class="arithmatex">\(R\to0\)</span> なので <strong>L安定</strong>。</li>
+<li><strong>台形則</strong>：A安定だが <span class="arithmatex">\(R\to-1\)</span>（<span class="arithmatex">\(|R|\to1\)</span>）なので <strong>L安定ではない</strong>。</li>
 </ul>
 </div>
+<p>A安定は「発散しない」、L安定は「硬い成分が消える」という別の要求である。</p>
 <figure>
   <img alt="A安定とL安定" src="../img/a_l_stability.png" width="820" />
 <br />
-<figcaption>左：負の実軸上の安定関数 <span class="arithmatex">\(R(z)\)</span>。<span class="arithmatex">\(z\to-\infty\)</span> で後退オイラー法は <span class="arithmatex">\(R\to0\)</span>（L安定）、台形則は <span class="arithmatex">\(R\to-1\)</span>（A安定だが L安定でない）。右：硬い成分 <span class="arithmatex">\(y'=-100y\)</span> を <span class="arithmatex">\(h=0.1\)</span>（<span class="arithmatex">\(z=-10\)</span>）で解いた数値解。後退オイラー法（<span class="arithmatex">\(R=0.091\)</span>）は単調に即減衰するが、台形則（<span class="arithmatex">\(R=-0.667\)</span>）は符号を交代させながらゆっくり減衰する。</figcaption>
+<figcaption>左：負の実軸上の安定関数 <span class="arithmatex">\(R(z)\)</span>。<span class="arithmatex">\(z\to-\infty\)</span> で後退オイラー法は <span class="arithmatex">\(0\)</span> に、台形則は <span class="arithmatex">\(-1\)</span> に近づく（前者は L安定、後者は A安定だが L安定でない）。右：硬い成分 <span class="arithmatex">\(y'=-100y\)</span> を <span class="arithmatex">\(h=0.1\)</span>（<span class="arithmatex">\(z=-10\)</span>）で解いた数値解。後退オイラー法（<span class="arithmatex">\(R=0.091\)</span>）は単調にすぐ減衰し、台形則（<span class="arithmatex">\(R=-0.667\)</span>）は符号を交代しながらゆっくり減衰する。</figcaption>
 </figure>
 <h2 id="week6-oscillation">第5回の台形則の符号振動の正体</h2>
-<p><a href="../../week05/implicit/#sample2">第5回</a>で、硬い問題を台形則で大きな刻みで解くと「有界だが符号が振動する」現象を見た。その正体がいま明らかになる。台形則は A安定なので <span class="arithmatex">\(|R(z)|\le1\)</span>（発散はしない＝有界）だが、L安定ではないので <span class="arithmatex">\(z\)</span> が大きく負のとき <span class="arithmatex">\(R(z)\)</span> が <span class="arithmatex">\(-1\)</span> に近づく。<span class="arithmatex">\(R\approx-1\)</span> とは「毎ステップ符号を変えながらほとんど大きさが変わらない」ことであり、これが<strong>符号振動とゆっくりした減衰</strong>として現れる。第5回の <span class="arithmatex">\(\lambda=20\)</span>、<span class="arithmatex">\(h=0.2\)</span> は <span class="arithmatex">\(z=-4\)</span> で <span class="arithmatex">\(R(-4)=-1/3\)</span> である。符号は毎ステップ反転し、1ステップの減衰は厳密解の <span class="arithmatex">\(e^{-4}\approx0.018\)</span> 倍に対して <span class="arithmatex">\(1/3\)</span> 倍にとどまる。下のサンプルコードで、<span class="arithmatex">\(z\to-\infty\)</span> の極限と実際の時系列を確かめる。</p>
+<p><a href="../../week05/implicit/#sample2">第5回</a>で、硬い問題を台形則で大きな刻みで解くと、有界だが符号が振動した。台形則は A安定なので <span class="arithmatex">\(|R(z)|\le1\)</span> で、発散はしない（有界）。しかし L安定ではないので、<span class="arithmatex">\(z\)</span> が大きく負のとき <span class="arithmatex">\(R(z)\)</span> が <span class="arithmatex">\(-1\)</span> に近づく。<span class="arithmatex">\(R\approx-1\)</span> とは、毎ステップ符号を変えながら大きさがほとんど変わらないことである。これが<strong>符号振動とゆっくりした減衰</strong>として現れる。第5回の <span class="arithmatex">\(\lambda=20\)</span>、<span class="arithmatex">\(h=0.2\)</span> は <span class="arithmatex">\(z=-4\)</span> で <span class="arithmatex">\(R(-4)=-1/3\)</span> である。符号は毎ステップ反転し、1ステップの減衰は厳密解の <span class="arithmatex">\(e^{-4}\approx0.018\)</span> 倍に対して <span class="arithmatex">\(1/3\)</span> 倍にとどまる。下のサンプルコードで、<span class="arithmatex">\(z\to-\infty\)</span> の極限と実際の時系列を確かめる。</p>
 <h2 id="sample">サンプルコード</h2>
 <p>安定関数 <code>R_backward</code>・<code>R_trapz</code> は<a href="../absolute-stability/#sample">絶対安定性のサンプル</a>と同じ関数である。前半で <span class="arithmatex">\(z\)</span> を負に大きくしたときの <span class="arithmatex">\(R(z)\)</span> を表にし、後半で硬い成分 <span class="arithmatex">\(y'=-100y\)</span> を <span class="arithmatex">\(h=0.1\)</span>（<span class="arithmatex">\(z=-10\)</span>）で8ステップ進める。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
@@ -3636,7 +3659,7 @@
 <a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="p">}</span>
 </code></pre></div>
-<p>コンパイルと実行：</p>
+<p>コンパイル・実行:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cc<span class="w"> </span>-O2<span class="w"> </span>-Wall<span class="w"> </span>-o<span class="w"> </span>al_stab<span class="w"> </span>al_stab.c<span class="w"> </span>-lm
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./al_stab
 </code></pre></div>
@@ -3704,12 +3727,18 @@
 <p>実行:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python3<span class="w"> </span>plot_al_stab.py
 </code></pre></div>
-<p>左は <span class="arithmatex">\(z\)</span> を負に大きくしたときの <span class="arithmatex">\(R(z)\)</span> で、後退オイラー法は <span class="arithmatex">\(0\)</span> に、台形則は <span class="arithmatex">\(-1\)</span> に貼りつく。右はその結果で、後退オイラー法は1ステップで厳密解と同じ「ほぼ <span class="arithmatex">\(0\)</span>」へ落ちるのに対し、台形則は <span class="arithmatex">\(\pm\)</span> を交代しながらゆっくり減る。<strong>A安定（発散しない）と L安定（硬い成分が消える）は別の要求</strong>であることが、この2枚から読み取れる。</p>
+<p>左は <span class="arithmatex">\(z\)</span> を負に大きくしたときの <span class="arithmatex">\(R(z)\)</span> で、後退オイラー法は <span class="arithmatex">\(0\)</span> に、台形則は <span class="arithmatex">\(-1\)</span> に近づく。右はその結果で、後退オイラー法は単調にすぐ減衰するのに対し、台形則は <span class="arithmatex">\(\pm\)</span> を交代しながらゆっくり減る。</p>
+<h2 id="choice">硬さに応じた使い分け</h2>
+<ul>
+<li>強い減衰が要る硬い成分には、後退オイラー法のような <strong>L安定</strong>な手法が向く。</li>
+<li>速い成分の残りが消える小さな <span class="arithmatex">\(h\)</span> で精度を重視するなら、<strong>2次</strong>の台形則が向く。</li>
+</ul>
+<p>どちらも発散はしない（A安定）。違いは硬い成分の消え方と精度にある。</p>
 <h2 id="_1">まとめ</h2>
 <ul>
 <li><strong>A安定</strong>：左半平面全体が絶対安定領域に含まれる。減衰問題で刻み幅に制約がない。後退オイラー法・台形則は A安定、陽解法は安定領域が有界なので A安定になり得ない。</li>
-<li><strong>L安定</strong>：A安定かつ <span class="arithmatex">\(z\to-\infty\)</span> で <span class="arithmatex">\(R\to0\)</span>。硬い成分を1ステップで消せる。後退オイラー法は L安定、台形則は <span class="arithmatex">\(R\to-1\)</span> で <strong>L安定ではない</strong>。</li>
-<li>第5回で見た台形則の符号振動は、A安定だが L安定でない（<span class="arithmatex">\(R\to-1\)</span>）ことの帰結である。強い減衰が要る硬い成分には後退オイラー法のような L安定な手法が向き、速い成分の残りが消える小さな <span class="arithmatex">\(h\)</span> で精度を重視するなら2次の台形則が向く。両者の兼ね合いは<a href="../exercises/#exercise-3">演習3</a>で数値で確かめる。</li>
+<li><strong>L安定</strong>：A安定かつ <span class="arithmatex">\(z\to-\infty\)</span> で <span class="arithmatex">\(R\to0\)</span>。硬い成分を1ステップでほぼ消せる。後退オイラー法は L安定、台形則は <span class="arithmatex">\(R\to-1\)</span> で <strong>L安定ではない</strong>。</li>
+<li>第5回で見た台形則の符号振動の正体は、A安定だが L安定でない（<span class="arithmatex">\(R\to-1\)</span>）ことである。強い減衰が要る硬い成分には後退オイラー法のような L安定な手法が向き、速い成分の残りが消える小さな <span class="arithmatex">\(h\)</span> で精度を重視するなら2次の台形則が向く。</li>
 <li>次は <a href="../systems/">連立系の安定性と硬い問題</a> で、これらの安定性が現実の硬い系でなぜ決定的かを見る。</li>
 </ul>
 

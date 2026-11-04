@@ -3560,7 +3560,7 @@ A\mathbf v = \lambda \mathbf v
 <h2 id="_2">物理的な意味</h2>
 <p>固有値問題は応用上の主役である。</p>
 <ul>
-<li><strong>弦の振動</strong>：両端を固定した弦の固有振動モードが <span class="arithmatex">\(\sin(n\pi x)\)</span>、固有振動数が <span class="arithmatex">\(\sqrt{\lambda_n}\propto n\pi\)</span>。最小固有値 <span class="arithmatex">\(\lambda_1\)</span> が<strong>基本振動（いちばん低い音）</strong>に対応する。</li>
+<li><strong>弦の振動</strong>：両端を固定した弦の固有振動モードが <span class="arithmatex">\(\sin(n\pi x)\)</span>、固有振動数は <span class="arithmatex">\(\sqrt{\lambda_n}=n\pi\)</span> に比例する。最小固有値 <span class="arithmatex">\(\lambda_1\)</span> が<strong>基本振動（いちばん低い音）</strong>に対応する。</li>
 <li><strong>量子井戸</strong>：1次元の無限井戸に閉じ込められた粒子のエネルギー準位は <span class="arithmatex">\(-y''=\lambda y\)</span> の固有値そのもの（<span class="arithmatex">\(\lambda\)</span> がエネルギー）。<strong>基底状態</strong>が最小固有値である。</li>
 </ul>
 <p>どちらも<strong>物理的に重要なのは最小固有値（基本モード・基底状態）</strong>であることが多い。後で見るように、最小固有値には<strong>逆べき乗法</strong>がよく効く。</p>
@@ -3569,6 +3569,11 @@ A\mathbf v = \lambda \mathbf v
 <div class="arithmatex">\[
 \lambda_k^{(h)} = \frac{4}{h^2}\sin^2\!\frac{k\pi h}{2}, \qquad k=1,\dots,N-1.
 \]</div>
+<p>これは固有ベクトルを代入すれば確かめられる。<span class="arithmatex">\(v_j=\sin(k\pi j/N)\)</span> を <span class="arithmatex">\(A\)</span> の <span class="arithmatex">\(j\)</span> 行目に代入する。<span class="arithmatex">\(jh=j/N\)</span> と <span class="arithmatex">\(\sin(\theta-\varphi)+\sin(\theta+\varphi)=2\sin\theta\cos\varphi\)</span> より <span class="arithmatex">\(v_{j-1}+v_{j+1}=2\cos(k\pi h)\,v_j\)</span> であり、<span class="arithmatex">\(1-\cos(k\pi h)=2\sin^2(k\pi h/2)\)</span> を使うと</p>
+<div class="arithmatex">\[
+\frac{-v_{j-1}+2v_j-v_{j+1}}{h^2} = \frac{2-2\cos(k\pi h)}{h^2}\,v_j = \frac{4}{h^2}\sin^2\!\frac{k\pi h}{2}\,v_j
+\]</div>
+<p>となる。<span class="arithmatex">\(v_0=v_N=0\)</span> なので境界条件も満たす。</p>
 <p><span class="arithmatex">\(k\)</span> が小さいとき <span class="arithmatex">\(\sin\theta\approx\theta\)</span> より <span class="arithmatex">\(\lambda_k^{(h)}\approx(k\pi)^2\)</span> となり、<span class="arithmatex">\(O(h^2)\)</span> の誤差で連続の固有値に一致する。一方、<span class="arithmatex">\(k\)</span> が大きい（高振動）モードでは正弦の頭打ちで離散固有値が連続値より<strong>下振れ</strong>し、最大固有値は <span class="arithmatex">\(4/h^2\)</span> に近づく（格子で表せる最高振動数の限界）。つまり、<strong>十分に解像された低次モードだけが高精度</strong>で、1波長あたりの格子点数が足りない高次モードでは固有値の誤差（数値分散）が大きい。ただし高次モードが「非物理的な人工物」だという意味ではない。連続問題にも <span class="arithmatex">\(\sin(k\pi x)\)</span> という固有関数が任意の <span class="arithmatex">\(k\)</span> で存在し、この差分行列の固有ベクトルは<strong>どの <span class="arithmatex">\(k\)</span> でも</strong> <span class="arithmatex">\(v^{(k)}_j=\sin(k\pi j/N)\)</span> とその格子点値に厳密に一致する。誤っているのは固有値のほうであり、これは単なる解像度不足である。</p>
 <figure>
   <img alt="離散固有値と連続固有値" src="../img/eigen_spectrum.png" width="760" />
@@ -3581,7 +3586,12 @@ A\mathbf v = \lambda \mathbf v
 \mathbf v^{(k+1)} = \frac{A\mathbf v^{(k)}}{\lVert A\mathbf v^{(k)}\rVert}.
 \]</div>
 <p>これが働くには、<strong>絶対値最大の固有値が一意</strong>であり、<strong>初期ベクトルがその固有ベクトル成分を含む</strong>ことが必要である。たとえば最低モードの固有ベクトルから出発すれば、いつまでも最大モードへは移らない。</p>
-<p>固有値そのものは<strong>レイリー商（Rayleigh quotient）</strong> <span class="arithmatex">\(\lambda = (\mathbf v^\top A\mathbf v)/(\mathbf v^\top\mathbf v)\)</span> で取り出す。本問題で最大固有値は最高振動モード <span class="arithmatex">\(\approx 4/h^2\)</span> に対応する。収束の速さは、<strong>初期ベクトルが実際に含んでいるモードのうち上位2つ</strong>の固有値の比</p>
+<p>固有値そのものは<strong>レイリー商（Rayleigh quotient）</strong> <span class="arithmatex">\(\lambda = (\mathbf v^\top A\mathbf v)/(\mathbf v^\top\mathbf v)\)</span> で取り出す。本問題で最大固有値は最高振動モード <span class="arithmatex">\(\approx 4/h^2\)</span> に対応する。</p>
+<p>方向が揃う理由は、初期ベクトルを <span class="arithmatex">\(A\)</span> の固有ベクトル <span class="arithmatex">\(\mathbf u_j\)</span> で <span class="arithmatex">\(\mathbf v^{(0)}=\sum_j c_j\mathbf u_j\)</span> と展開すると分かる。<span class="arithmatex">\(k\)</span> 回掛けたあとは</p>
+<div class="arithmatex">\[
+A^k\mathbf v^{(0)} = \lambda_{\max}^k\Bigl(c_{\max}\mathbf u_{\max} + \sum_{j\neq\max} c_j\Bigl(\frac{\lambda_j}{\lambda_{\max}}\Bigr)^{k}\mathbf u_j\Bigr)
+\]</div>
+<p>となり、括弧の中の第2項は <span class="arithmatex">\(\lvert\lambda_j/\lambda_{\max}\rvert^k\)</span> に比例して消えていく。正規化は方向を変えないので、<span class="arithmatex">\(\mathbf v^{(k)}\)</span> は <span class="arithmatex">\(\mathbf u_{\max}\)</span> の方向へ揃う。収束の速さは、<strong>初期ベクトルが実際に含んでいるモードのうち上位2つ</strong>の固有値の比</p>
 <div class="arithmatex">\[
 r = \left\lvert\frac{\lambda_{\text{次}}}{\lambda_{\max}}\right\rvert
 \]</div>
@@ -3694,7 +3704,7 @@ A\mathbf w = \mathbf v^{(k)}
 <a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot; 反復 k    レイリー商 lambda_1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a><span class="w">    </span><span class="n">lam_prev</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-0-100" name="__codelineno-0-100" href="#__codelineno-0-100"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;=</span><span class="mi">60</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">){</span>
-<a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a><span class="w">        </span><span class="n">thomas</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">);</span><span class="w">             </span><span class="cm">/* A w = v を解く（=A^{-1} v）*/</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a><span class="w">        </span><span class="n">thomas</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">w</span><span class="p">);</span><span class="w">   </span><span class="cm">/* A w = v を解く（=A^{-1} v）*/</span>
 <a id="__codelineno-0-102" name="__codelineno-0-102" href="#__codelineno-0-102"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">nrm</span><span class="o">=</span><span class="n">norm2</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">w</span><span class="p">);</span>
 <a id="__codelineno-0-103" name="__codelineno-0-103" href="#__codelineno-0-103"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">m</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">nrm</span><span class="p">;</span>
 <a id="__codelineno-0-104" name="__codelineno-0-104" href="#__codelineno-0-104"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">lam</span><span class="o">=</span><span class="n">rayleigh</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">inv_h2</span><span class="p">,</span><span class="n">v</span><span class="p">);</span>

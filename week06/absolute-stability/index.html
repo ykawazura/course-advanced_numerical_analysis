@@ -3583,13 +3583,13 @@
 
 <h1 id="_1">絶対安定性と絶対安定領域</h1>
 <h2 id="stability-function">安定関数 <span class="arithmatex">\(R(z)\)</span></h2>
-<p><a href="../#test-equation">テスト方程式</a> <span class="arithmatex">\(y'=\lambda y\)</span> に1段法を適用すると、右辺 <span class="arithmatex">\(f(t,y)=\lambda y\)</span> が線形なので、1ステップの更新はすべて</p>
+<p><a href="../#test-equation">テスト方程式</a> <span class="arithmatex">\(y'=\lambda y\)</span> に1段法を当てると、右辺 <span class="arithmatex">\(f(t,y)=\lambda y\)</span> が線形なので、1ステップの更新はすべて次の形になる。</p>
 <div class="arithmatex">\[
 y_{n+1} = R(z)\, y_n, \qquad z = h\lambda
 \]</div>
-<p>という形になる。係数 <span class="arithmatex">\(R(z)\)</span> をその手法の <strong>安定関数</strong>（stability function）と呼ぶ。<span class="arithmatex">\(N\)</span> ステップ後の数値解は <span class="arithmatex">\(y_N = R(z)^N y_0\)</span> だから、</p>
+<p>係数 <span class="arithmatex">\(R(z)\)</span> をその手法の <strong>安定関数</strong>（stability function）と呼ぶ。<span class="arithmatex">\(N\)</span> ステップ後の数値解は <span class="arithmatex">\(y_N = R(z)^N y_0\)</span> だから、</p>
 <ul>
-<li><span class="arithmatex">\(|R(z)|&lt;1\)</span> なら <span class="arithmatex">\(y_n\to0\)</span>（厳密解 <span class="arithmatex">\(e^{\lambda t}\to0\)</span> と同様に減衰）、</li>
+<li><span class="arithmatex">\(|R(z)|&lt;1\)</span> なら <span class="arithmatex">\(y_n\to0\)</span>（<span class="arithmatex">\(\mathrm{Re}\,\lambda&lt;0\)</span> の厳密解 <span class="arithmatex">\(e^{\lambda t}\to0\)</span> と同じく減衰）、</li>
 <li><span class="arithmatex">\(|R(z)|=1\)</span> なら振幅一定、</li>
 <li><span class="arithmatex">\(|R(z)|&gt;1\)</span> なら <span class="arithmatex">\(|y_n|\to\infty\)</span>（<strong>発散</strong>）</li>
 </ul>
@@ -3599,13 +3599,13 @@ y_{n+1} = R(z)\, y_n, \qquad z = h\lambda
 <li><strong>後退オイラー法</strong>：<span class="arithmatex">\(y_{n+1}=y_n+h\lambda y_{n+1}\)</span> より <span class="arithmatex">\((1-z)\,y_{n+1}=y_n\)</span>、これを <span class="arithmatex">\(y_{n+1}\)</span> について解いて <span class="arithmatex">\(R(z)=\dfrac{1}{1-z}\)</span>。</li>
 <li><strong>台形則</strong>：<span class="arithmatex">\(y_{n+1}=y_n+\tfrac h2(\lambda y_n+\lambda y_{n+1})\)</span> の <span class="arithmatex">\(y_{n+1}\)</span> を左辺に集めると <span class="arithmatex">\(\left(1-\tfrac z2\right)y_{n+1}=\left(1+\tfrac z2\right)y_n\)</span>、よって <span class="arithmatex">\(R(z)=\dfrac{1+z/2}{1-z/2}\)</span>。</li>
 </ul>
-<p>これらは第5回の増幅率に <span class="arithmatex">\(z=h\lambda\)</span> を代入したものに等しい（<a href="../#test-equation">符号の対応</a>を参照）。違いは、第5回が <span class="arithmatex">\(\lambda\)</span> を負の実数に限っていたのに対し、ここでは <span class="arithmatex">\(z\)</span> を<strong>複素平面全体</strong>で考える点である。</p>
+<p>3つとも第5回の増幅率の <span class="arithmatex">\(\lambda h\)</span> を <span class="arithmatex">\(-z\)</span> に置き換えたものに等しい（<a href="../#test-equation">符号の対応</a>を参照）。違いは、第5回が負の実軸上だけを考えたのに対し、ここでは <span class="arithmatex">\(z\)</span> を<strong>複素平面全体</strong>で考える点である。<span class="arithmatex">\(z\)</span> を複素数まで広げるのは、連立系 <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> が <span class="arithmatex">\(A\)</span> の固有値 <span class="arithmatex">\(\lambda_i\)</span> ごとのテスト方程式に分かれ（<a href="../systems/#diagonalization">連立系の対角化</a>）、振動する系では実数の <span class="arithmatex">\(A\)</span> でも <span class="arithmatex">\(\lambda_i\)</span> が複素数になるからである（<a href="../../week04/runge-kutta/#system">第4回の調和振動子</a>では <span class="arithmatex">\(\pm i\)</span>）。</p>
 <h2 id="region">絶対安定領域</h2>
-<p>数値解が増大しないための条件 <span class="arithmatex">\(|R(z)|\le1\)</span> を満たすとき、その手法はその <span class="arithmatex">\(z\)</span> で <strong>絶対安定</strong>（absolutely stable）であるという。複素 <span class="arithmatex">\(z=h\lambda\)</span> 平面のうちこの条件を満たす領域</p>
+<p>数値解が増大しないための条件 <span class="arithmatex">\(|R(z)|\le1\)</span> を満たすとき、その手法はその <span class="arithmatex">\(z\)</span> で <strong>絶対安定</strong>（absolutely stable）であるという。複素 <span class="arithmatex">\(z=h\lambda\)</span> 平面のうち、この条件を満たす領域</p>
 <div class="arithmatex">\[
 S=\{\,z\in\mathbb{C} : |R(z)|\le1\,\}
 \]</div>
-<p>を、その手法の <strong>絶対安定領域</strong>（region of absolute stability）と呼ぶ。手法を選び刻み幅 <span class="arithmatex">\(h\)</span> を決めると点 <span class="arithmatex">\(z=h\lambda\)</span> が定まり、それが <span class="arithmatex">\(S\)</span> の内側にあれば数値解は減衰し、外に出れば発散する。</p>
+<p>を、その手法の <strong>絶対安定領域</strong>（region of absolute stability）と呼ぶ。手法を選び刻み幅 <span class="arithmatex">\(h\)</span> を決めると点 <span class="arithmatex">\(z=h\lambda\)</span> が定まる。それが <span class="arithmatex">\(S\)</span> の内側なら数値解は減衰し、外に出れば発散する。</p>
 <p>各手法の安定領域は次のように求まる。</p>
 <ul>
 <li><strong>前進オイラー法</strong>：<span class="arithmatex">\(|1+z|\le1\)</span> ⟺ 中心 <span class="arithmatex">\(-1\)</span>・半径 <span class="arithmatex">\(1\)</span> の <strong>円板の内側</strong>。</li>
@@ -3616,18 +3616,18 @@ S=\{\,z\in\mathbb{C} : |R(z)|\le1\,\}
 <figure>
   <img alt="3手法の絶対安定領域" src="../img/stability_regions.png" width="820" />
 <br />
-<figcaption>複素 <span class="arithmatex">\(z=h\lambda\)</span> 平面上の絶対安定領域（塗りつぶし部分が <span class="arithmatex">\(|R(z)|\le1\)</span>）。<strong>前進オイラー法</strong>（陽解法）は中心 <span class="arithmatex">\(-1\)</span> の小さな円板に限られるのに対し、<strong>後退オイラー法</strong>・<strong>台形則</strong>（陰解法）は左半平面をまるごと含む。陽解法と陰解法の安定性の差が一目でわかる。</figcaption>
+<figcaption>複素 <span class="arithmatex">\(z=h\lambda\)</span> 平面上の絶対安定領域（塗りつぶし部分が <span class="arithmatex">\(|R(z)|\le1\)</span>）。<strong>前進オイラー法</strong>（陽解法）は中心 <span class="arithmatex">\(-1\)</span> の小さな円板に限られ、<strong>後退オイラー法</strong>・<strong>台形則</strong>（陰解法）は左半平面をまるごと含む。陽解法と陰解法の安定性の差が一目でわかる。</figcaption>
 </figure>
 <h2 id="real-axis">負の実軸上で見る——第5回の再解釈</h2>
-<p><span class="arithmatex">\(\lambda\)</span> が負の実数（<span class="arithmatex">\(y'=-|\lambda|y\)</span> のような減衰問題）のとき、<span class="arithmatex">\(z=h\lambda\)</span> は負の実軸上を動く。この線上で <span class="arithmatex">\(|R(z)|\)</span> を描くと、第5回で個別に見た挙動が一望できる。</p>
+<p>減衰問題（<span class="arithmatex">\(\lambda&lt;0\)</span>）では <span class="arithmatex">\(z=h\lambda\)</span> が負の実軸上を動く。この線上で <span class="arithmatex">\(|R(z)|\)</span> を描くと、第5回で個別に見た挙動が一望できる。</p>
 <figure>
   <img alt="負の実軸上の |R(z)|" src="../img/amp_real_axis.png" width="680" />
 <br />
-<figcaption>負の実軸 <span class="arithmatex">\(z=h\lambda&lt;0\)</span> 上の <span class="arithmatex">\(|R(z)|\)</span>。前進オイラー法は <span class="arithmatex">\(-2\le z\le0\)</span> でのみ <span class="arithmatex">\(|R|\le1\)</span> で、<span class="arithmatex">\(z&lt;-2\)</span> では発散する。後退オイラー法・台形則は負の実軸全体で <span class="arithmatex">\(|R|\le1\)</span>（無条件に安定）。台形則が <span class="arithmatex">\(z=-2\)</span> で <span class="arithmatex">\(|R|=0\)</span> になるのは <span class="arithmatex">\(R=(1+z/2)/(1-z/2)\)</span> の分子が消えるためで、特異な性質ではない。</figcaption>
+<figcaption>負の実軸 <span class="arithmatex">\(z=h\lambda&lt;0\)</span> 上の <span class="arithmatex">\(|R(z)|\)</span>。前進オイラー法は <span class="arithmatex">\(-2\le z\le0\)</span> でのみ <span class="arithmatex">\(|R|\le1\)</span> で、<span class="arithmatex">\(z&lt;-2\)</span> では発散する。後退オイラー法・台形則は負の実軸全体で <span class="arithmatex">\(|R|\le1\)</span>（無条件に安定）。台形則が <span class="arithmatex">\(z=-2\)</span> で <span class="arithmatex">\(|R|=0\)</span> になるのは、<span class="arithmatex">\(R=(1+z/2)/(1-z/2)\)</span> の分子が消えるためで、特異な性質ではない。</figcaption>
 </figure>
-<p>前進オイラー法が安定なのは <span class="arithmatex">\(-2\le z\le0\)</span>、すなわち <span class="arithmatex">\(h\le 2/|\lambda|\)</span> のときに限られる。これは第5回で <span class="arithmatex">\(y'=-20y\)</span> を解いたときの刻み制約 <span class="arithmatex">\(h\le2/20=0.1\)</span> にほかならない。次のサンプルコードでこの境界を数値で確かめる。</p>
+<p>前進オイラー法が安定なのは <span class="arithmatex">\(-2\le z\le0\)</span>、すなわち <span class="arithmatex">\(h\le2/|\lambda|\)</span> に限られ、<span class="arithmatex">\(y'=-20y\)</span> では <span class="arithmatex">\(h\le2/20=0.1\)</span> になる。第5回は <span class="arithmatex">\(|r|&lt;1\)</span> を安定の条件として <span class="arithmatex">\(h&lt;2/\lambda\)</span> と書いたが、本回の絶対安定領域は境界 <span class="arithmatex">\(|R|=1\)</span> を含むので <span class="arithmatex">\(h=2/|\lambda|\)</span> も含める。次のサンプルコードでこの境界を数値で確かめる。</p>
 <h2 id="sample">サンプルコード</h2>
-<p>3手法の安定関数を <code>R_forward</code>・<code>R_backward</code>・<code>R_trapz</code>、<span class="arithmatex">\(y_0=1\)</span> から <span class="arithmatex">\(y_{n+1}=R\,y_n\)</span> を <span class="arithmatex">\(N\)</span> ステップ進める処理を <code>integrate</code>、ステップ数の計算を <code>steps</code> に切り出しておく。以降のサンプルと演習でも、これらの関数は同じ形で使う。</p>
+<p>3手法の安定関数を <code>R_forward</code>・<code>R_backward</code>・<code>R_trapz</code>、<span class="arithmatex">\(y_0=1\)</span> から <span class="arithmatex">\(y_{n+1}=R\,y_n\)</span> を <span class="arithmatex">\(N\)</span> ステップ進める処理を <code>integrate</code>、ステップ数の計算を <code>steps</code> に切り出しておく。以降のサンプルでも、これらの関数は同じ形で使う。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -3697,7 +3697,7 @@ S=\{\,z\in\mathbb{C} : |R(z)|\le1\,\}
 <a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="p">}</span>
 </code></pre></div>
-<p>コンパイルと実行：</p>
+<p>コンパイル・実行:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cc<span class="w"> </span>-O2<span class="w"> </span>-Wall<span class="w"> </span>-o<span class="w"> </span>abs_stab<span class="w"> </span>abs_stab.c<span class="w"> </span>-lm
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./abs_stab
 </code></pre></div>
@@ -3721,7 +3721,7 @@ S=\{\,z\in\mathbb{C} : |R(z)|\le1\,\}
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a> 0.100      -2.00     -1.000       1.0000e+00     6.1442e-06
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a> 0.120      -2.40     -1.400      -5.3782e+00     6.1442e-06
 </code></pre></div>
-<p>表より、前進オイラー法の <span class="arithmatex">\(|R|\)</span> は <span class="arithmatex">\(z=-2\)</span> でちょうど <span class="arithmatex">\(1\)</span>、<span class="arithmatex">\(z&lt;-2\)</span> で <span class="arithmatex">\(1\)</span> を超える。後段の積分はこの境界を裏づける。<span class="arithmatex">\(h=0.04\)</span>（<span class="arithmatex">\(z=-0.8\)</span>）では <span class="arithmatex">\(R=0.2\)</span> で滑らかに減衰、<span class="arithmatex">\(h=0.10\)</span>（<span class="arithmatex">\(z=-2\)</span>）では <span class="arithmatex">\(R=-1\)</span> で <span class="arithmatex">\(\pm1\)</span> を振動、<span class="arithmatex">\(h=0.12\)</span>（<span class="arithmatex">\(z=-2.4\)</span>）では <span class="arithmatex">\(R=-1.4\)</span> で発散する。値は第5回の表と同じである。増幅率 <span class="arithmatex">\(1-\lambda h\)</span> を <span class="arithmatex">\(R(z)=1+z\)</span> と読み替えただけだからである。</p>
+<p>表より、前進オイラー法の <span class="arithmatex">\(|R|\)</span> は <span class="arithmatex">\(z=-2\)</span> でちょうど <span class="arithmatex">\(1\)</span>、<span class="arithmatex">\(z&lt;-2\)</span> で <span class="arithmatex">\(1\)</span> を超える。後段の積分はこの境界を裏づける。<span class="arithmatex">\(h=0.04\)</span>（<span class="arithmatex">\(z=-0.8\)</span>）では <span class="arithmatex">\(R=0.2\)</span> で減衰し、<span class="arithmatex">\(h=0.10\)</span>（<span class="arithmatex">\(z=-2\)</span>）では <span class="arithmatex">\(R=-1\)</span> で <span class="arithmatex">\(\pm1\)</span> を振動し、<span class="arithmatex">\(h=0.12\)</span>（<span class="arithmatex">\(z=-2.4\)</span>）では <span class="arithmatex">\(R=-1.4\)</span> で発散する。値は第5回の表と同じである。増幅率 <span class="arithmatex">\(1-\lambda h\)</span> を <span class="arithmatex">\(R(z)=1+z\)</span> と読み替えただけだからである。</p>
 <h2 id="plot">可視化</h2>
 <p><code>abs_stab.c</code> は表に出す6点だけでなく、同じ <span class="arithmatex">\(|R(z)|\)</span> を <span class="arithmatex">\(-5\le z\le0\)</span> で細かく刻んで <code>amp_real_axis.dat</code>（1列目 <span class="arithmatex">\(z\)</span>、2〜4列目が前進・後退・台形の <span class="arithmatex">\(|R(z)|\)</span>）に書き出す。これを読めば<a href="#real-axis">上の図</a>が手元で再現できる。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -3751,11 +3751,11 @@ S=\{\,z\in\mathbb{C} : |R(z)|\le1\,\}
 </code></pre></div>
 <p>前進オイラー法の曲線だけが <span class="arithmatex">\(z=-2\)</span> で <span class="arithmatex">\(|R|=1\)</span> を横切り、その左で <span class="arithmatex">\(1\)</span> を超える。後退オイラー法と台形則の曲線は負の実軸全体で <span class="arithmatex">\(1\)</span> を下回ったままである。</p>
 <h2 id="rk">RK 法の安定関数と安定領域</h2>
-<p>本講義で扱う RK1〜RK4 のように<strong>段数と次数が一致する</strong>（<span class="arithmatex">\(s=p\)</span>）陽的ルンゲ＝クッタ法をテスト方程式に適用すると、安定関数は指数関数のテイラー展開 <span class="arithmatex">\(e^z=\sum_{k\ge0} z^k/k!\)</span> の最初の <span class="arithmatex">\(p+1\)</span> 項にちょうど一致する。</p>
+<p>本講義で扱う RK1〜RK4 のように<strong>段数と次数が一致する</strong>（<span class="arithmatex">\(s=p\)</span>）陽的ルンゲ＝クッタ法をテスト方程式に当てると、安定関数は指数関数のテイラー展開 <span class="arithmatex">\(e^z=\sum_{k\ge0} z^k/k!\)</span> の最初の <span class="arithmatex">\(p+1\)</span> 項にちょうど一致する。</p>
 <div class="arithmatex">\[
 R_p(z) = \sum_{k=0}^{p} \frac{z^k}{k!} = 1 + z + \frac{z^2}{2} + \cdots + \frac{z^p}{p!}.
 \]</div>
-<p>（RK1 は前進オイラー法 <span class="arithmatex">\(1+z\)</span>、RK4 は <span class="arithmatex">\(1+z+z^2/2+z^3/6+z^4/24\)</span>。）次数が上がるほど安定領域は広がり、負の実軸方向にも伸びる。</p>
+<p>（RK1 は前進オイラー法 <span class="arithmatex">\(1+z\)</span>、RK4 は <span class="arithmatex">\(1+z+z^2/2+z^3/6+z^4/24\)</span>。）次数が上がるほど安定領域は広がり、実軸上の安定限界は <span class="arithmatex">\(-2\)</span>（RK1・RK2）、<span class="arithmatex">\(\approx-2.51\)</span>（RK3）、<span class="arithmatex">\(\approx-2.79\)</span>（RK4）になる。ただし領域はつねに<strong>有界</strong>である。</p>
 <div class="admonition note">
 <p class="admonition-title">一般の <span class="arithmatex">\(p\)</span> 次 RK 法では</p>
 <p><span class="arithmatex">\(s\)</span> 段の陽的 RK 法の安定関数は高々 <span class="arithmatex">\(s\)</span> 次の多項式で、<span class="arithmatex">\(p\)</span> 次の条件は「<span class="arithmatex">\(z^p\)</span> までの係数が <span class="arithmatex">\(e^z\)</span> に一致する」ことを要求するにすぎない。段数が次数を上回る（<span class="arithmatex">\(s&gt;p\)</span>）と <span class="arithmatex">\(z^{p+1}\)</span> 以上に方法依存の項が残り、安定関数は上の <span class="arithmatex">\(R_p(z)\)</span> とは異なる。両者が一致するのは <span class="arithmatex">\(s=p\)</span> のときで、陽的 RK 法でこれが可能なのは <span class="arithmatex">\(p\le4\)</span> までである（5 次には 6 段以上が必要＝バチャーの障壁）。本講義の RK1〜RK4 はいずれも <span class="arithmatex">\(s=p\)</span> なので、ちょうどテイラー多項式になる。</p>
@@ -3765,20 +3765,21 @@ R_p(z) = \sum_{k=0}^{p} \frac{z^k}{k!} = 1 + z + \frac{z^2}{2} + \cdots + \frac{
 <br />
 <figcaption>RK 法の絶対安定領域 <span class="arithmatex">\(|R_p(z)|\le1\)</span>。次数が上がるほど領域は拡大し、負の実軸との交点（実軸上の安定限界）は RK1・RK2 が <span class="arithmatex">\(z=-2\)</span>、RK3 が <span class="arithmatex">\(z\approx-2.51\)</span>、RK4 が <span class="arithmatex">\(z\approx-2.79\)</span> と外へ広がる。ただし領域はつねに<strong>有界</strong>で、いくら高次でも左半平面全体を覆うことはできない。</figcaption>
 </figure>
-<p>高次にすれば安定領域は広がるが、有界であることは変わらない。これが陽解法の本質的な限界であり、次ページの <a href="../a-l-stability/">A安定性</a> につながる。</p>
+<p>RK4 の実軸上の限界は、<span class="arithmatex">\(R_4(z)=1\)</span> の負の根である。<span class="arithmatex">\(R_4(z)-1 = z\,(z^3+4z^2+12z+24)/24\)</span> なので、3次方程式 <span class="arithmatex">\(z^3+4z^2+12z+24=0\)</span> の実根 <span class="arithmatex">\(z\approx-2.7853\)</span> にあたる（<span class="arithmatex">\(R_4\)</span> は実軸上でつねに正なので、<span class="arithmatex">\(R_4(z)=-1\)</span> にはならない）。</p>
+<p>安定領域が有界であることは陽解法の本質的な限界であり、次ページの <a href="../a-l-stability/">A安定性</a> につながる。</p>
 <h2 id="convergence-vs-stability">収束と絶対安定性は別物</h2>
 <p>混同しやすいので強調しておく。</p>
 <ul>
 <li><strong>収束（次数）</strong>：<span class="arithmatex">\(h\to0\)</span> で数値解が真の解に近づくか、その速さ。第4回の主題。</li>
 <li><strong>絶対安定性</strong>：実際に使う有限の <span class="arithmatex">\(h\)</span> で数値解が発散しないか。本回の主題。</li>
 </ul>
-<p>RK4 は4次という高い収束次数をもつが、安定領域は有界で、<span class="arithmatex">\(z=h\lambda&lt;-2.79\)</span> では発散する。逆に後退オイラー法は1次と精度は低いが、左半平面全体で安定である。<strong>精度が高いこと</strong>と<strong>安定であること</strong>は独立した長所であり、手法選びでは両方を見なければならない。</p>
+<p>RK4 は4次だが、安定領域は有界で、<span class="arithmatex">\(z=h\lambda&lt;-2.79\)</span> では発散する。逆に後退オイラー法は1次だが、左半平面全体で安定である。<strong>精度が高いこと</strong>と<strong>安定であること</strong>は独立した長所で、手法選びでは両方を見なければならない。</p>
 <h2 id="_2">まとめ</h2>
 <ul>
-<li>テスト方程式に1段法を適用すると <span class="arithmatex">\(y_{n+1}=R(z)y_n\)</span>（<span class="arithmatex">\(z=h\lambda\)</span>）となり、<span class="arithmatex">\(R(z)\)</span> を <strong>安定関数</strong> という。</li>
-<li><span class="arithmatex">\(|R(z)|\le1\)</span> を満たす <span class="arithmatex">\(z\)</span> の集合が <strong>絶対安定領域</strong>。前進オイラー法＝円板の内側、後退オイラー法＝円板の外側、台形則＝左半平面。</li>
-<li>負の実軸では前進オイラー法が <span class="arithmatex">\(h\le2/|\lambda|\)</span> に縛られる（第5回の刻み制約の正体）。RK 法は高次ほど安定領域が広いが、つねに有界である。</li>
-<li>収束次数と絶対安定性は別概念。次は <a href="../a-l-stability/">A安定とL安定</a> で、左半平面全体を覆う陰解法の強みを定式化する。</li>
+<li>テスト方程式に1段法を当てると <span class="arithmatex">\(y_{n+1}=R(z)y_n\)</span>（<span class="arithmatex">\(z=h\lambda\)</span>）となり、<span class="arithmatex">\(R(z)\)</span> を <strong>安定関数</strong> という。</li>
+<li><span class="arithmatex">\(|R(z)|\le1\)</span> を満たす <span class="arithmatex">\(z\)</span> の集合が <strong>絶対安定領域</strong> で、前進オイラー法は円板の内側、後退オイラー法は円板の外側、台形則は左半平面である。</li>
+<li>負の実軸では前進オイラー法が <span class="arithmatex">\(h\le2/|\lambda|\)</span> に縛られる（第5回の刻みの制約の正体）。</li>
+<li>収束次数と絶対安定性は別の概念である。RK 法は高次ほど安定領域が広いが、陽解法の安定領域はつねに有界である。次は <a href="../a-l-stability/">A安定とL安定</a> で、左半平面全体を覆う陰解法の強みを定式化する。</li>
 </ul>
 
 

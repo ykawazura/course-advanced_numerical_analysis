@@ -1545,10 +1545,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本回を貫く3つの例題
+        今回扱う例題
       
     </span>
   </a>
@@ -1556,7 +1556,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         このページの構成
@@ -3477,10 +3477,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本回を貫く3つの例題
+        今回扱う例題
       
     </span>
   </a>
@@ -3488,7 +3488,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         このページの構成
@@ -3519,31 +3519,30 @@
 <p>第4回・第5回で、常微分方程式の初期値問題を解く各種の手法——前進オイラー法・ルンゲ＝クッタ法（第4回）、線形多段法・後退オイラー法・台形則（第5回）——を学んだ。本回ではこれらを貫く一つの問い、「<strong>数値解はいつ破綻せずに正しく振る舞うのか</strong>」を理論として体系化する。</p>
 <h2 id="_1">今回の目標</h2>
 <ul>
-<li><strong>収束</strong>（<span class="arithmatex">\(h\to0\)</span> の極限で正しい解に近づく）と <strong>絶対安定性</strong>（有限の刻み幅 <span class="arithmatex">\(h\)</span> で誤差が増大しない）が別の概念であることを理解する</li>
-<li><strong>テスト方程式</strong> <span class="arithmatex">\(y'=\lambda y\)</span> の上で各手法の <strong>安定関数</strong> <span class="arithmatex">\(R(z)\)</span>（<span class="arithmatex">\(z=h\lambda\)</span>）を求め、<strong>絶対安定領域</strong>を複素平面に描く</li>
-<li><strong>A安定性</strong>・<strong>L安定性</strong> を定義し、陰的解法が硬い問題に強い理由を説明できる。第5回で見た台形則の符号振動の正体を突き止める</li>
-<li>線形連立系の安定性が各固有値で決まること、<strong>硬さ</strong>（stiffness）が陽解法に厳しい刻み制約を課すことを理解する</li>
+<li><strong>収束</strong>と<strong>絶対安定性</strong>の違いを理解し、テスト方程式 <span class="arithmatex">\(y'=\lambda y\)</span> の上で各手法の<strong>安定関数</strong> <span class="arithmatex">\(R(z)\)</span> と<strong>絶対安定領域</strong>を求める</li>
+<li><strong>A安定性</strong>・<strong>L安定性</strong>を定義し、陰的解法が硬い問題に強い理由と、第5回で見た台形則の符号振動の正体を突き止める</li>
+<li>線形連立系の安定性が各固有値で決まること、<strong>硬さ</strong>（stiffness）が陽解法に厳しい刻みの制約を課すことを理解する</li>
 </ul>
 <h2 id="_2">なぜ「安定性」を改めて論じるのか</h2>
-<p>第4回では、刻み幅 <span class="arithmatex">\(h\)</span> を小さくすると数値解が真の解に近づく <strong>収束</strong>（convergence）と、その速さを表す <strong>収束次数</strong>（order of convergence）を学んだ。しかし第5回の硬い問題では、収束する手法であっても <span class="arithmatex">\(h\)</span> が大きいと数値解が振動・発散する現象を目にした。前進オイラー法で <span class="arithmatex">\(y'=-20y\)</span> を <span class="arithmatex">\(h=0.12\)</span> で解くと、真の解は <span class="arithmatex">\(0\)</span> へ滑らかに減衰するのに、数値解は <span class="arithmatex">\(-5.38\)</span> へと発散した。</p>
-<p>これは矛盾ではない。<strong>収束は <span class="arithmatex">\(h\to0\)</span> という極限の話</strong>であり、<strong>実際に使う有限の <span class="arithmatex">\(h\)</span> で数値解が暴走しないか</strong>は、それとは別の問題である。後者を <strong>絶対安定性</strong>（absolute stability）と呼び、本回の主題とする。第5回では「増幅率 <span class="arithmatex">\(r\)</span>」として手法ごとに個別に眺めたこの量を、ここでは一つの枠組み——テスト方程式と安定関数——に統合する。</p>
+<p>第4回は、<span class="arithmatex">\(h\to0\)</span> で数値解が真の解に近づく <strong>収束</strong>（convergence）と、その速さを表す <strong>収束次数</strong>（order of convergence）を学んだ。ところが第5回では、収束する前進オイラー法で <span class="arithmatex">\(y'=-20y\)</span> を <span class="arithmatex">\(h=0.12\)</span> で解くと、真の解は <span class="arithmatex">\(0\)</span> へなめらかに減衰するのに、数値解は <span class="arithmatex">\(t=0.6\)</span> で <span class="arithmatex">\(-5.38\)</span> に達して発散した。</p>
+<p>これは矛盾ではない。<strong>収束は <span class="arithmatex">\(h\to0\)</span> の極限の話</strong>であり、<strong>実際に使う有限の <span class="arithmatex">\(h\)</span> で数値解が暴走しないか</strong>は別の問題である。後者を <strong>絶対安定性</strong>（absolute stability）と呼び、本回の主題とする。第5回では増幅率 <span class="arithmatex">\(r\)</span> を手法ごとに個別に求めた。本回はこれをテスト方程式と安定関数という一つの枠組みにまとめる。</p>
 <h2 id="test-equation">テスト方程式</h2>
-<p>安定性を測る共通のものさしとして、次の <strong>テスト方程式</strong>（test equation）を用いる。</p>
+<p>安定性を測る共通のものさしとして、次の <strong>テスト方程式</strong>（test equation）を使う。</p>
 <div class="arithmatex">\[
 y' = \lambda y, \qquad y(0)=y_0, \qquad \lambda \in \mathbb{C}.
 \]</div>
-<p>厳密解は <span class="arithmatex">\(y(t)=y_0 e^{\lambda t}\)</span> である。<span class="arithmatex">\(\mathrm{Re}\,\lambda&lt;0\)</span> のとき解は減衰し、<span class="arithmatex">\(\mathrm{Re}\,\lambda&gt;0\)</span> のとき増大する。<span class="arithmatex">\(\lambda\)</span> を<strong>複素数</strong>としたのは、減衰（実部）と振動（虚部）を同時に扱うためである。</p>
+<p>厳密解は <span class="arithmatex">\(y(t)=y_0 e^{\lambda t}\)</span> である。<span class="arithmatex">\(\mathrm{Re}\,\lambda&lt;0\)</span> なら解は減衰し、<span class="arithmatex">\(\mathrm{Re}\,\lambda&gt;0\)</span> なら増大する。<span class="arithmatex">\(\lambda\)</span> を<strong>複素数</strong>としたのは、減衰（実部）と振動（虚部）を同時に扱うためである。</p>
 <div class="admonition note">
-<p class="admonition-title">なぜこの単純な方程式で十分か</p>
+<p class="admonition-title">この単純な方程式で足りる理由</p>
 <p>一見特殊に見えるが、テスト方程式は一般の問題の安定性をよく代表する。</p>
 <ul>
-<li><strong>線形連立系</strong> <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> は、<span class="arithmatex">\(A\)</span> を対角化すれば各固有値 <span class="arithmatex">\(\lambda_i\)</span> について <span class="arithmatex">\(u_i'=\lambda_i u_i\)</span> という独立なテスト方程式に分解できる（<a href="systems/">連立系のページ</a>で扱う）。</li>
-<li><strong>非線形問題</strong> <span class="arithmatex">\(y'=f(t,y)\)</span> も、ある解の近傍では <span class="arithmatex">\(\lambda=\partial f/\partial y\)</span>（ヤコビアン）による線形化で局所的にテスト方程式に帰着する。</li>
+<li><strong>線形連立系</strong> <span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span> は、<span class="arithmatex">\(A\)</span> を対角化すれば各固有値 <span class="arithmatex">\(\lambda_i\)</span> についての独立なテスト方程式 <span class="arithmatex">\(w_i'=\lambda_i w_i\)</span> に分かれる（<a href="systems/">連立系のページ</a>で扱う）。</li>
+<li><strong>非線形問題</strong> <span class="arithmatex">\(y'=f(t,y)\)</span> も、ある解の近くでは <span class="arithmatex">\(\lambda=\partial f/\partial y\)</span>（ヤコビアン）で線形化すれば、局所的にテスト方程式になる。</li>
 </ul>
-<p>つまりテスト方程式での安定性は、より一般の問題の安定性を判断する出発点となる。</p>
+<p>つまりテスト方程式での安定性が、一般の問題の安定性を判断する出発点になる。</p>
 </div>
 <h3 id="5">第5回との対応（符号に注意）</h3>
-<p>第5回では減衰を表すのに <span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda&gt;0\)</span>）と書いた。本回の標準的なテスト方程式 <span class="arithmatex">\(y'=\lambda y\)</span> とは <span class="arithmatex">\(\lambda\)</span> の符号が逆になっているだけで、内容は同じである。第5回の <span class="arithmatex">\(\lambda&gt;0\)</span> は、本回では <span class="arithmatex">\(\lambda&lt;0\)</span>（負の実軸上）に対応する。<span class="arithmatex">\(z=h\lambda\)</span> とおくと、第5回で求めた増幅率は本回の安定関数と完全に一致する。</p>
+<p>第5回では減衰を <span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda&gt;0\)</span>）と書いた。本回の <span class="arithmatex">\(y'=\lambda y\)</span> とは <span class="arithmatex">\(\lambda\)</span> の符号が逆なだけで、第5回の <span class="arithmatex">\(\lambda&gt;0\)</span> は本回の <span class="arithmatex">\(\lambda&lt;0\)</span>（負の実軸上）にあたる。</p>
 <table>
 <thead>
 <tr>
@@ -3570,14 +3569,15 @@ y' = \lambda y, \qquad y(0)=y_0, \qquad \lambda \in \mathbb{C}.
 </tr>
 </tbody>
 </table>
-<h2 id="3">本回を貫く3つの例題</h2>
+<p>第5回の <span class="arithmatex">\(\lambda h\)</span> を <span class="arithmatex">\(-z\)</span> と読み替えれば、第5回の増幅率は本回の安定関数と一致する。</p>
+<h2 id="_3">今回扱う例題</h2>
 <p>本回では3つの例題を一貫して用いる。</p>
 <ol>
 <li><strong>テスト方程式</strong> <span class="arithmatex">\(y'=\lambda y\)</span>（上述）。安定関数・絶対安定領域・A安定・L安定をすべてこの方程式の上で定義する。</li>
-<li><span id="example-stiff"></span><strong>硬いスカラー方程式（第5回からの継続）</strong>：<span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda=20\)</span>。<a href="a-l-stability/#sample">A安定とL安定</a>では <span class="arithmatex">\(100\)</span> も使う）。第5回で「前進は <span class="arithmatex">\(h&lt;2/\lambda\)</span> でないと発散する」と数値表で見た現象を、安定関数 <span class="arithmatex">\(R(z)\)</span> のグラフとして説明し直す。</li>
+<li><span id="example-stiff"></span><strong>硬いスカラー方程式（第5回からの継続）</strong>：<span class="arithmatex">\(y'=-\lambda y\)</span>（<span class="arithmatex">\(\lambda=20\)</span>。<a href="a-l-stability/#sample">A安定とL安定</a>では <span class="arithmatex">\(100\)</span> も使う）。第5回の刻みの制約を、安定関数 <span class="arithmatex">\(R(z)\)</span> のグラフで説明し直す。</li>
 <li><span id="stiff-system"></span><strong>硬い線形連立系（新規）</strong>：<span class="arithmatex">\(\mathbf{y}'=A\mathbf{y}\)</span>、<span class="arithmatex">\(A\)</span> は固有値 <span class="arithmatex">\(\lambda_1=-1,\ \lambda_2=-100\)</span> をもつ。速い成分（<span class="arithmatex">\(\lambda_2\)</span>）と遅い成分（<span class="arithmatex">\(\lambda_1\)</span>）で時間スケールが100倍違う典型的な硬い系で、陽解法が刻みに縛られる様子と、陰的解法（各ステップで線形系を第3回のガウス消去で解く）の威力を見る。</li>
 </ol>
-<h2 id="_3">このページの構成</h2>
+<h2 id="_4">このページの構成</h2>
 <ul>
 <li><a href="absolute-stability/">絶対安定性と絶対安定領域</a>：安定関数 <span class="arithmatex">\(R(z)\)</span>、絶対安定領域の複素平面図、RK 法の安定領域。</li>
 <li><a href="a-l-stability/">A安定とL安定</a>：陰的解法がなぜ硬い問題に強いのか、台形則の符号振動の正体。</li>

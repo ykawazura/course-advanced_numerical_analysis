@@ -1718,7 +1718,7 @@
   <a href="#unifying-operator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本回を貫く演算子 \(-\dfrac{d^2}{dx^2}\)
+        3つの手法に共通する演算子 \(-\dfrac{d^2}{dx^2}\)
       
     </span>
   </a>
@@ -1740,12 +1740,12 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本章を貫く3つの例題
+        今回扱う3つの例題
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="本章を貫く3つの例題">
+    <nav class="md-nav" aria-label="今回扱う3つの例題">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3485,7 +3485,7 @@
   <a href="#unifying-operator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本回を貫く演算子 \(-\dfrac{d^2}{dx^2}\)
+        3つの手法に共通する演算子 \(-\dfrac{d^2}{dx^2}\)
       
     </span>
   </a>
@@ -3507,12 +3507,12 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        本章を貫く3つの例題
+        今回扱う3つの例題
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="本章を貫く3つの例題">
+    <nav class="md-nav" aria-label="今回扱う3つの例題">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3586,8 +3586,7 @@
 <ul>
 <li>両端で条件が課される<strong>境界値問題（boundary value problem, BVP）</strong>を、初期値問題に帰着して解く<strong>撃ち抜き法（shooting method）</strong>を理解し、線形・非線形の両方で実装できるようになる</li>
 <li>微分演算子を差分で置き換える<strong>有限差分法（finite difference method）</strong>で BVP を<strong>三重対角線形系</strong>に離散化し、<strong>トーマス法（Thomas algorithm）</strong>で解けるようになる</li>
-<li>微分作用素の<strong>固有値問題（eigenvalue problem）</strong>——<strong>スツルム・リウヴィル問題（Sturm–Liouville problem）</strong>——を同じ離散化で<strong>行列の固有値問題</strong>に直し、<strong>べき乗法（power method）</strong>と<strong>逆べき乗法（inverse power method）</strong>で固有値・固有関数を求められるようになる</li>
-<li>これらの手法が、第2〜4回で学んだ道具（求根・ガウス消去・RK4）の組み合わせで作れることを理解する</li>
+<li>微分演算子の<strong>固有値問題（eigenvalue problem）</strong>を同じ離散化で<strong>行列の固有値問題</strong>に直し、<strong>べき乗法（power method）</strong>と<strong>逆べき乗法（inverse power method）</strong>で固有値・固有関数を求められるようになる</li>
 </ul>
 <h2 id="_2">初期値問題との違い</h2>
 <p>第4〜6回で扱った<strong>初期値問題（initial value problem, IVP）</strong>は、ある1点（始点）で値と傾きがすべて与えられ、そこから前進的に時間発展を追う問題であった。これに対し本回の境界値問題は、2階の方程式</p>
@@ -3600,8 +3599,8 @@ y'' = f(x, y, y'), \qquad y(a) = \alpha, \quad y(b) = \beta
 -y'' = \lambda y, \qquad y(0) = y(1) = 0
 \]</div>
 <p>のように、自明解 <span class="arithmatex">\(y\equiv0\)</span> 以外の解が存在するような特別な値 <span class="arithmatex">\(\lambda\)</span>（<strong>固有値</strong>）と、その解 <span class="arithmatex">\(y\)</span>（<strong>固有関数</strong>）の組を求める問題である。</p>
-<h2 id="unifying-operator">本回を貫く演算子 <span class="arithmatex">\(-\dfrac{d^2}{dx^2}\)</span></h2>
-<p>本回の3つの手法は、見かけは異なるが<strong>同じ離散化</strong>から生まれる。区間 <span class="arithmatex">\([0,1]\)</span> を <span class="arithmatex">\(N\)</span> 等分し、刻み幅 <span class="arithmatex">\(h=1/N\)</span>、格子点 <span class="arithmatex">\(x_i=ih\)</span>（<span class="arithmatex">\(i=0,1,\dots,N\)</span>）をとる。2階微分を<strong>中心差分</strong>で近似すると</p>
+<h2 id="unifying-operator">3つの手法に共通する演算子 <span class="arithmatex">\(-\dfrac{d^2}{dx^2}\)</span></h2>
+<p>本回の3つの手法はどれも演算子 <span class="arithmatex">\(-y''\)</span> を扱い、有限差分法と固有値問題の解法は<strong>同じ離散化</strong>から生まれる。区間 <span class="arithmatex">\([0,1]\)</span> を <span class="arithmatex">\(N\)</span> 等分し、刻み幅 <span class="arithmatex">\(h=1/N\)</span>、格子点 <span class="arithmatex">\(x_i=ih\)</span>（<span class="arithmatex">\(i=0,1,\dots,N\)</span>）をとる。2階微分を<strong>中心差分</strong>で近似すると</p>
 <div class="arithmatex">\[
 -y''(x_i) \approx \frac{-y_{i-1} + 2y_i - y_{i+1}}{h^2}
 \]</div>
@@ -3620,7 +3619,7 @@ A = \frac{1}{h^2}
 <li><strong>境界値問題</strong> <span class="arithmatex">\(-y''=f\)</span> は、右辺を <span class="arithmatex">\(f_i=f(x_i)\)</span> として <strong>線形系</strong> <span class="arithmatex">\(A\mathbf y = \mathbf f\)</span></li>
 <li><strong>固有値問題</strong> <span class="arithmatex">\(-y''=\lambda y\)</span> は、<strong>行列の固有値問題</strong> <span class="arithmatex">\(A\mathbf v = \lambda \mathbf v\)</span></li>
 </ul>
-<p>と、<strong>まったく同じ行列 <span class="arithmatex">\(A\)</span> の右辺だけが違う問題</strong>になる。この対応が本回の背骨である。各手法は過去回の道具に帰着する：</p>
+<p>と、<strong>まったく同じ行列 <span class="arithmatex">\(A\)</span> の右辺だけが違う問題</strong>になる。各手法は、第2〜4回で学んだ道具（求根・ガウス消去・RK4）と補足の多変数ニュートン法を組み合わせて作れる：</p>
 <table>
 <thead>
 <tr>
@@ -3660,7 +3659,7 @@ A = \frac{1}{h^2}
 <li><strong>量子力学</strong>：1次元の井戸に閉じ込められた粒子のエネルギー準位は、定常シュレディンガー方程式 <span class="arithmatex">\(-y''+V(x)y=\lambda y\)</span> の固有値問題そのもの（<span class="arithmatex">\(\lambda\)</span> がエネルギー）。</li>
 <li><strong>熱・拡散の定常状態</strong>：時間変化が止まった拡散方程式は <span class="arithmatex">\(-y''=f\)</span> の形の BVP。<a href="../week09/">第9回以降の偏微分方程式</a>へ直接つながる。</li>
 </ul>
-<h2 id="3">本章を貫く3つの例題</h2>
+<h2 id="3">今回扱う3つの例題</h2>
 <p>すべて演算子 <span class="arithmatex">\(-y''\)</span>（あるいはその非線形版）の上で構成し、手法どうしを直接比較できるようにする。</p>
 <h3 id="example-linear">例題1: 線形境界値問題（主役）</h3>
 <div class="arithmatex">\[
@@ -3682,7 +3681,7 @@ y'' = \tfrac{3}{2}\, y^2, \qquad y(0) = 4, \quad y(1) = 1.
 <li><a href="shooting/">撃ち抜き法</a> — BVP→IVP 変換・線形撃ち抜き・非線形撃ち抜き（割線法）・RK4 の再利用</li>
 <li><a href="finite-difference/">有限差分法</a> — 中心差分・三重対角系・トーマス法・2次収束・非線形BVPへの拡張</li>
 <li><a href="eigenvalue/">固有値問題</a> — スツルム・リウヴィル問題・べき乗法・逆べき乗法・離散固有値と連続固有値</li>
-<li><a href="exercises/">演習問題</a> — 非ゼロ境界の有限差分・非線形撃ち抜き・逆べき乗法・ポテンシャル付き固有値問題</li>
+<li><a href="exercises/">演習問題</a> — 斉次解の増え方を変えて、撃ち抜き法と有限差分法の手間を比べる</li>
 </ul>
 
 
