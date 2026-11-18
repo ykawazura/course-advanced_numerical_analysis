@@ -3370,6 +3370,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../appendix/nonlinear-bvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    非線形境界値問題
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../appendix/exercises/" class="md-nav__link">
         
   
@@ -3599,12 +3627,18 @@ y'' = f(x, y, y'), \qquad y(a) = \alpha, \quad y(b) = \beta
 -y'' = \lambda y, \qquad y(0) = y(1) = 0
 \]</div>
 <p>のように、自明解 <span class="arithmatex">\(y\equiv0\)</span> 以外の解が存在するような特別な値 <span class="arithmatex">\(\lambda\)</span>（<strong>固有値</strong>）と、その解 <span class="arithmatex">\(y\)</span>（<strong>固有関数</strong>）の組を求める問題である。</p>
+<p>境界値問題との違いは未知数の立ち方にある。境界値問題は右辺 <span class="arithmatex">\(f\)</span> が与えられ、両端の条件を満たす解 <span class="arithmatex">\(y\)</span> がただ1つ決まる（次節のように離散化すれば、連立1次方程式 <span class="arithmatex">\(A\mathbf y=\mathbf f\)</span> になる）。固有値問題では右辺に未知の <span class="arithmatex">\(\lambda\)</span> が入るので、<span class="arithmatex">\(\lambda\)</span> 自体が答えの一部になり、<span class="arithmatex">\(y\)</span> が解なら定数倍 <span class="arithmatex">\(cy\)</span> も解なので固有関数には定数倍の自由度が残る。しかも <span class="arithmatex">\(\lambda\)</span> はどんな値でもよいわけではない。<span class="arithmatex">\(\lambda&gt;0\)</span> のとき <span class="arithmatex">\(y(0)=0\)</span> を満たす解は <span class="arithmatex">\(y=C\sin(\sqrt{\lambda}\,x)\)</span> で、これが <span class="arithmatex">\(y(1)=0\)</span> も満たすのは <span class="arithmatex">\(\sqrt{\lambda}=n\pi\)</span>（<span class="arithmatex">\(n=1,2,\dots\)</span>）のときだけである（<span class="arithmatex">\(\lambda\leq0\)</span> では自明解しか残らない）。つまり固有値は離散的な列 <span class="arithmatex">\(\lambda_n=(n\pi)^2\)</span> に限られ、固有関数は <span class="arithmatex">\(\sin(n\pi x)\)</span> の定数倍になる。</p>
+<figure>
+  <img alt="最初の3つの固有関数と、固有値でない lambda=20 の解を重ねた図" src="img/eigen_modes.png" width="700" />
+<br />
+<figcaption>固有関数 <span class="arithmatex">\(\sin(n\pi x)\)</span>（<span class="arithmatex">\(n=1,2,3\)</span>）と、固有値でない <span class="arithmatex">\(\lambda=20\)</span> の場合（破線）。<span class="arithmatex">\(\lambda=20\)</span> の解 <span class="arithmatex">\(\sin(\sqrt{20}\,x)\)</span> は <span class="arithmatex">\(y(0)=0\)</span> を満たすものの、<span class="arithmatex">\(y(1)=\sin\sqrt{20}=-0.97\)</span> となり、定数倍しても右端を 0 にできない。<span class="arithmatex">\(n\)</span> が1つ増えるごとに内部の節（<span class="arithmatex">\(y=0\)</span> となる点）が1つ増え、固有値 <span class="arithmatex">\(\lambda_n=(n\pi)^2\)</span> は <span class="arithmatex">\(n^2\)</span> で増える。</figcaption>
+</figure>
 <h2 id="unifying-operator">3つの手法に共通する演算子 <span class="arithmatex">\(-\dfrac{d^2}{dx^2}\)</span></h2>
 <p>本回の3つの手法はどれも演算子 <span class="arithmatex">\(-y''\)</span> を扱い、有限差分法と固有値問題の解法は<strong>同じ離散化</strong>から生まれる。区間 <span class="arithmatex">\([0,1]\)</span> を <span class="arithmatex">\(N\)</span> 等分し、刻み幅 <span class="arithmatex">\(h=1/N\)</span>、格子点 <span class="arithmatex">\(x_i=ih\)</span>（<span class="arithmatex">\(i=0,1,\dots,N\)</span>）をとる。2階微分を<strong>中心差分</strong>で近似すると</p>
 <div class="arithmatex">\[
 -y''(x_i) \approx \frac{-y_{i-1} + 2y_i - y_{i+1}}{h^2}
 \]</div>
-<p>となる。ディリクレ境界 <span class="arithmatex">\(y_0=y_N=0\)</span> のもとで内点 <span class="arithmatex">\(i=1,\dots,N-1\)</span> を並べると、これは<strong>対称三重対角行列</strong></p>
+<p>となる。両端の値が既知なら（ディリクレ条件 <span class="arithmatex">\(y_0=\alpha,\ y_N=\beta\)</span>）、内点 <span class="arithmatex">\(i=1,\dots,N-1\)</span> を並べると、これは<strong>対称三重対角行列</strong></p>
 <div class="arithmatex">\[
 A = \frac{1}{h^2}
 \begin{pmatrix}
@@ -3614,7 +3648,7 @@ A = \frac{1}{h^2}
    &amp;        &amp; -1 &amp;  2
 \end{pmatrix}
 \]</div>
-<p>を未知ベクトル <span class="arithmatex">\(\mathbf y=(y_1,\dots,y_{N-1})^\top\)</span> に作用させた形になる。すると：</p>
+<p>を未知ベクトル <span class="arithmatex">\(\mathbf y=(y_1,\dots,y_{N-1})^\top\)</span> に作用させた形になる。<span class="arithmatex">\(\alpha,\beta\)</span> が 0 でなくても <span class="arithmatex">\(A\)</span> は変わらず、既知の端の値が右辺へ移るだけである。すると：</p>
 <ul>
 <li><strong>境界値問題</strong> <span class="arithmatex">\(-y''=f\)</span> は、右辺を <span class="arithmatex">\(f_i=f(x_i)\)</span> として <strong>線形系</strong> <span class="arithmatex">\(A\mathbf y = \mathbf f\)</span></li>
 <li><strong>固有値問題</strong> <span class="arithmatex">\(-y''=\lambda y\)</span> は、<strong>行列の固有値問題</strong> <span class="arithmatex">\(A\mathbf v = \lambda \mathbf v\)</span></li>
@@ -3640,7 +3674,7 @@ A = \frac{1}{h^2}
 <td>第3回（直接法）</td>
 </tr>
 <tr>
-<td>非線形BVPの有限差分</td>
+<td>非線形BVPの有限差分（補足）</td>
 <td>多変数ニュートン法（ヤコビアンが三重対角）</td>
 <td>補足（多変数ニュートン法）</td>
 </tr>
@@ -3675,13 +3709,13 @@ y'' = \tfrac{3}{2}\, y^2, \qquad y(0) = 4, \quad y(1) = 1.
 <div class="arithmatex">\[
 -y'' = \lambda y, \qquad y(0) = y(1) = 0.
 \]</div>
-<p>厳密な固有値は <span class="arithmatex">\(\lambda_n=(n\pi)^2\approx 9.87,\ 39.5,\ 88.8,\dots\)</span>、固有関数は <span class="arithmatex">\(\sin(n\pi x)\)</span> である。離散化した行列 <span class="arithmatex">\(A\)</span> の固有値は <span class="arithmatex">\(\lambda_k^{(h)}=\dfrac{4}{h^2}\sin^2\!\dfrac{k\pi h}{2}\)</span> で、低次モードは <span class="arithmatex">\(O(h^2)\)</span> で連続の固有値に一致する。<strong>べき乗法</strong>は最大固有値（最高振動モード <span class="arithmatex">\(\approx 4/h^2\)</span>）に、<strong>逆べき乗法</strong>は最小固有値（基本モード <span class="arithmatex">\(\approx\pi^2\)</span>）に収束する。</p>
+<p>厳密な固有値は <span class="arithmatex">\(\lambda_n=(n\pi)^2\)</span>、固有関数は <span class="arithmatex">\(\sin(n\pi x)\)</span> である。離散化した行列 <span class="arithmatex">\(A\)</span> の固有値は <span class="arithmatex">\(\lambda_k^{(h)}=\dfrac{4}{h^2}\sin^2\!\dfrac{k\pi h}{2}\)</span> で、低次モードは <span class="arithmatex">\(O(h^2)\)</span> で連続の固有値に一致する。<strong>べき乗法</strong>は最大固有値（最高振動モード <span class="arithmatex">\(\approx 4/h^2\)</span>）に、<strong>逆べき乗法</strong>は最小固有値（基本モード <span class="arithmatex">\(\approx\pi^2\)</span>）に収束する。</p>
 <h2 id="_4">各ページ・演習</h2>
 <ul>
 <li><a href="shooting/">撃ち抜き法</a> — BVP→IVP 変換・線形撃ち抜き・非線形撃ち抜き（割線法）・RK4 の再利用</li>
-<li><a href="finite-difference/">有限差分法</a> — 中心差分・三重対角系・トーマス法・2次収束・非線形BVPへの拡張</li>
+<li><a href="finite-difference/">有限差分法</a> — 中心差分・三重対角系・トーマス法・2次収束</li>
 <li><a href="eigenvalue/">固有値問題</a> — スツルム・リウヴィル問題・べき乗法・逆べき乗法・離散固有値と連続固有値</li>
-<li><a href="exercises/">演習問題</a> — 斉次解の増え方を変えて、撃ち抜き法と有限差分法の手間を比べる</li>
+<li><a href="exercises/">演習問題</a> — 同じ境界値問題を2つの方法で解き、厳密解と重ねて描く</li>
 </ul>
 
 

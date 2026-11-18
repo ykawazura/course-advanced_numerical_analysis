@@ -3353,6 +3353,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../appendix/nonlinear-bvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    非線形境界値問題
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../appendix/exercises/" class="md-nav__link">
         
   
@@ -3689,7 +3717,7 @@ u_j^{n+1} = u_{j-1}^n
 <p>——<strong>配列を1つずらすだけ</strong>になる。これは「1ステップで波がちょうど1格子ぶん進む」設定だから、格子と特性線が完全に一致し、数値解は<strong>厳密解に一致する</strong>。増幅率も <span class="arithmatex">\(\lvert G\rvert^2=1-2\cdot1\cdot(1-1)\cdot(1-\cos\theta)=1\)</span> で、減衰も位相のずれもない。実行結果の表で <span class="arithmatex">\(\nu=1.0000\)</span> の行だけ最大誤差が <span class="arithmatex">\(2.1\times10^{-21}\)</span>（丸め誤差の水準）になっているのはこのためである。</p>
 <p>もっとも、これは1次元・等速・等間隔格子という特権的な状況でしか成り立たない。<span class="arithmatex">\(c\)</span> が場所や時間によって変わる現実の問題では、すべての格子点で <span class="arithmatex">\(\nu=1\)</span> を実現することはできず、安全のために <span class="arithmatex">\(\nu\)</span> を <span class="arithmatex">\(0.5\)</span> 程度に取るのが普通である。すると次ページで見るとおり、<strong><span class="arithmatex">\(\nu\)</span> を <span class="arithmatex">\(1\)</span> から遠ざけた分だけ数値拡散が効いてくる</strong>。</p>
 <h2 id="sample">サンプルコード</h2>
-<p>FTCS の発散、<span class="arithmatex">\(\nu\)</span> を変えても救えないこと、風上差分の CFL 条件を1本にまとめる。1ステップの更新は手法ごとに関数 <code>ftcs_adv_step</code>・<code>upwind_step</code> に切り出し（<code>ftcs_adv_step</code> は<a href="../../week09/explicit/#sample">第9回</a>の拡散方程式の <code>ftcs_step</code> と区別するための名前）、<code>solve</code> には呼ぶ関数を引数 <code>step</code> で渡す。関数を引数で渡す書き方は<a href="../../week07/shooting/#sample">第7回の撃ち抜き法</a>の <code>rhs</code> と同じである。次ページ以降のサンプルと演習では <code>upwind_step</code> を1文字も変えずに写し、新しい手法も同じ引数の1ステップ関数として足していく。格子点の数 <span class="arithmatex">\(N\)</span> は引数で決まるので、解の配列は <a href="../../week03/iterative/#malloc"><code>malloc</code></a> で確保する。</p>
+<p>FTCS の発散、<span class="arithmatex">\(\nu\)</span> を変えても救えないこと、風上差分の CFL 条件を1本にまとめる。1ステップの更新は手法ごとに関数 <code>ftcs_adv_step</code>・<code>upwind_step</code> に切り出し（<code>ftcs_adv_step</code> は<a href="../../week09/explicit/#sample">第9回</a>の拡散方程式の <code>ftcs_step</code> と区別するための名前）、<code>solve</code> には呼ぶ関数を引数 <code>step</code> で渡す。関数そのものを引数にすると、手法を替えても <code>solve</code> を書き直さずに済む。次ページ以降のサンプルと演習では <code>upwind_step</code> を1文字も変えずに写し、新しい手法も同じ引数の1ステップ関数として足していく。格子点の数 <span class="arithmatex">\(N\)</span> は引数で決まるので、解の配列は <a href="../../week03/iterative/#malloc"><code>malloc</code></a> で確保する。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span>

@@ -1760,6 +1760,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dense-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        密な行列として解く手間
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#thomas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1805,17 +1816,6 @@
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        非線形境界値問題への拡張
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         まとめ
@@ -3342,6 +3342,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../appendix/nonlinear-bvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    非線形境界値問題
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../appendix/exercises/" class="md-nav__link">
         
   
@@ -3443,6 +3471,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dense-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        密な行列として解く手間
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#thomas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3488,17 +3527,6 @@
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        非線形境界値問題への拡張
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         まとめ
@@ -3550,20 +3578,37 @@ y_{i-1}+y_{i+1} = 2y_i + h^2y''_i + \frac{h^4}{12}y''''_i + \cdots
 \]</div>
 <p>という <span class="arithmatex">\(N-1\)</span> 本の式が並ぶ。ディリクレ境界 <span class="arithmatex">\(y_0=\alpha,\ y_N=\beta\)</span> は既知なので、<span class="arithmatex">\(i=1\)</span> と <span class="arithmatex">\(i=N-1\)</span> の式に現れる <span class="arithmatex">\(y_0,y_N\)</span> を右辺へ移す。未知ベクトル <span class="arithmatex">\(\mathbf y=(y_1,\dots,y_{N-1})^\top\)</span> について書けば</p>
 <div class="arithmatex">\[
-A\mathbf y = \mathbf f, \qquad
-A = \frac{1}{h^2}
+\frac{1}{h^2}
 \begin{pmatrix}
  2 &amp; -1 &amp;        &amp;        \\
 -1 &amp;  2 &amp; -1     &amp;        \\
    &amp; \ddots &amp; \ddots &amp; \ddots \\
    &amp;        &amp; -1 &amp;  2
-\end{pmatrix},
-\qquad
-f_i = f(x_i) + \frac{\text{境界の寄与}}{h^2}
+\end{pmatrix}
+\begin{pmatrix}
+y_1 \\ y_2 \\ \vdots \\ y_{N-1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+f(x_1) + \alpha/h^2 \\ f(x_2) \\ \vdots \\ f(x_{N-1}) + \beta/h^2
+\end{pmatrix}
 \]</div>
-<p>となる（端の行だけ右辺に <span class="arithmatex">\(\alpha/h^2\)</span> または <span class="arithmatex">\(\beta/h^2\)</span> が加わる。本ページの例題1は <span class="arithmatex">\(\alpha=\beta=0\)</span> なので寄与はない）。<span class="arithmatex">\(A\)</span> は<strong>対称三重対角</strong>——各行に非ゼロが高々3個——という非常に疎な構造を持つ。これを活かすのがトーマス法である。</p>
+<p>となる。これを <span class="arithmatex">\(A\mathbf y=\mathbf f\)</span> と略記する。境界の値 <span class="arithmatex">\(\alpha,\beta\)</span> は行列には入らず、右辺の端の2成分にだけ現れる（本ページの例題1は <span class="arithmatex">\(\alpha=\beta=0\)</span> なので寄与はない）。<span class="arithmatex">\(A\)</span> は<strong>対称三重対角</strong>——各行に非ゼロが高々3個——という非常に疎な構造を持つ。これを活かすのがトーマス法である。</p>
+<h2 id="dense-cost">密な行列として解く手間</h2>
+<p>三重対角という構造を使わず、<span class="arithmatex">\(A\)</span> をただの <span class="arithmatex">\(n\times n\)</span> 行列として<a href="../../week03/direct/">第3回の <code>gauss_solve</code></a>に渡しても解は得られる。<span class="arithmatex">\(N=50\)</span>（未知数は <span class="arithmatex">\(n=N-1=49\)</span> 個）で試すと、厳密解との最大誤差は <span class="arithmatex">\(3.290518\times10^{-4}\)</span> で、次節のトーマス法の値と有効数字7桁まで一致し、2つの解の差は倍精度の丸めの大きさ（<span class="arithmatex">\(10^{-16}\)</span> 程度）にとどまる。違うのは手間と記憶量である。</p>
+<figure>
+  <img alt="左に n=49 の係数行列の非零パターン、右に密な消去とトーマス法の乗除算回数を並べた図" src="../img/dense_cost.png" width="760" />
+<br />
+<figcaption>左: <span class="arithmatex">\(N=50\)</span> の係数行列（<span class="arithmatex">\(n=49\)</span>）。非零は <span class="arithmatex">\(3n-2=145\)</span> 個で全 2401 成分の 6.0% しかないが、密な消去の二重ループは 2401 成分すべてを走査する。右: サンプルコードが行う乗除算を数えた回数。<span class="arithmatex">\(n=49\)</span> では <code>gauss_solve</code> が 42777 回、次節のトーマス法が 242 回で 177 倍、<span class="arithmatex">\(N=1000\)</span> では <span class="arithmatex">\(6.7\times10^{4}\)</span> 倍に開く。記憶量も、密なほうは係数行列だけで <span class="arithmatex">\(8n^2\)</span> バイト（<span class="arithmatex">\(N=1000\)</span> で 8.0 MB、<span class="arithmatex">\(N=10^4\)</span> で 800 MB）要るのに対し、トーマス法は長さ <span class="arithmatex">\(n\)</span> の配列7本（<span class="arithmatex">\(56n\)</span> バイト）で済む。</figcaption>
+</figure>
+<p>この損は fill-in のせいではない。<span class="arithmatex">\(A\)</span> は対称正定値なので、<a href="../../week03/direct/">第3回</a>で見たとおり部分ピボット選択をしても行が入れ替わらず、密なガウス消去で解いても消去後に帯の外の非零は1つも生じない。それでも <span class="arithmatex">\(O(n^3)\)</span> のままなのは、密な消去が 0 の成分を 0 と知らずに走査し、「0 を掛けて 0 を引く」更新を <span class="arithmatex">\(n^2\)</span> 回繰り返すからである。疎な構造はアルゴリズムの側で使わない限り手間に効かない、ということである。次節のトーマス法は、この走査を帯の中だけに限る。</p>
 <h2 id="thomas">トーマス法：三重対角専用のガウス消去</h2>
 <p><a href="../../week03/direct/">第3回の直接法</a>で学んだガウス消去を一般の <span class="arithmatex">\(n\times n\)</span> 行列にそのまま使うと <span class="arithmatex">\(O(n^3)\)</span> の演算が要る。しかし三重対角行列では、消去で<strong>埋まる（fill-in する）成分がない</strong>ため、計算量を <span class="arithmatex">\(O(n)\)</span> まで落とせる。これを<strong>トーマス法（Thomas algorithm）</strong>——三重対角行列アルゴリズム（tridiagonal matrix algorithm, TDMA）とも呼ぶ。第3回で名前だけ紹介したこの手法を、ここで実装する。</p>
+<figure>
+  <img alt="一般の行列と三重対角行列で、第1列の消去で書き換わる成分を比べた模式図" src="../img/thomas_cost.png" width="600" />
+<br />
+<figcaption><span class="arithmatex">\(n=6\)</span> の行列で、第1列を消去するときに書き換わる係数（橙）を比べたもの。消去では先頭の行（緑）を使い、その下の第1列要素（赤）を 0 にする。一般の行列では <span class="arithmatex">\(5\times5=25\)</span> 個が書き換わり、全列では <span class="arithmatex">\(5^2+4^2+\dots+1^2=55\)</span> 個、つまり <span class="arithmatex">\(O(n^3)\)</span> になる。三重対角行列では消す成分が <span class="arithmatex">\(a_1\)</span> だけで、書き換わるのも <span class="arithmatex">\(b_1\)</span> だけである。先頭の行は <span class="arithmatex">\(c_0\)</span> より右が 0 なので、帯の外は 0 のまま埋まらない（fill-in しない）。どの列でも同じことが起き、全列で <span class="arithmatex">\(n-1=5\)</span> 個、つまり <span class="arithmatex">\(O(n)\)</span> で済む。</figcaption>
+</figure>
 <p>各行を</p>
 <div class="arithmatex">\[
 a_i\, y_{i-1} + b_i\, y_i + c_i\, y_{i+1} = d_i \qquad (i=0,\dots,n-1)
@@ -3579,10 +3624,20 @@ c'_0 = \frac{c_0}{b_0},\quad d'_0 = \frac{d_0}{b_0}; \qquad
 c'_i = \frac{c_i}{b_i - a_i c'_{i-1}},\quad
 d'_i = \frac{d_i - a_i d'_{i-1}}{b_i - a_i c'_{i-1}}.
 \]</div>
+<figure>
+  <img alt="前進消去の途中を表した模式図" src="../img/thomas_forward.png" width="600" />
+<br />
+<figcaption>前進消去で <span class="arithmatex">\(i\)</span> 行目（ここでは <span class="arithmatex">\(n=6\)</span>, <span class="arithmatex">\(i=3\)</span>）を処理しているところ。緑の行はすでに <span class="arithmatex">\(y_k+c'_ky_{k+1}=d'_k\)</span> の形になっている。<span class="arithmatex">\(i\)</span> 行目から <span class="arithmatex">\(i-1\)</span> 行目の <span class="arithmatex">\(a_i\)</span> 倍を引くと <span class="arithmatex">\(a_i\)</span>（赤）が 0 になり、書き換わるのは <span class="arithmatex">\(b_i\)</span> と <span class="arithmatex">\(d_i\)</span>（橙）だけである。<span class="arithmatex">\(c_i\)</span> の真上（破線）は 0 なので、この引き算で <span class="arithmatex">\(c_i\)</span> は変わらない。最後に行全体を <span class="arithmatex">\(b_i-a_ic'_{i-1}\)</span> で割って緑の形にそろえ、次の行へ進む。</figcaption>
+</figure>
 <p><strong>後退代入</strong>——消去が終わると最後の行は <span class="arithmatex">\(y_{n-1}=d'_{n-1}\)</span> になる。末尾から順に解を確定する：</p>
 <div class="arithmatex">\[
 y_{n-1} = d'_{n-1}, \qquad y_i = d'_i - c'_i\, y_{i+1}.
 \]</div>
+<figure>
+  <img alt="後退代入の途中を表した模式図" src="../img/thomas_backward.png" width="540" />
+<br />
+<figcaption>後退代入で <span class="arithmatex">\(y_i\)</span>（ここでは <span class="arithmatex">\(n=6\)</span>, <span class="arithmatex">\(i=2\)</span>）を求めているところ。前進消去を終えた係数行列は、対角が 1 で、その右隣だけに <span class="arithmatex">\(c'_k\)</span> が並ぶ上二重対角行列である。<span class="arithmatex">\(y_{i+1}\)</span> から下（青）はすでに確定しているので、<span class="arithmatex">\(i\)</span> 行目は <span class="arithmatex">\(y_i=d'_i-c'_iy_{i+1}\)</span> で決まる。使うのは橙の枠で囲んだ <span class="arithmatex">\(c'_i\)</span>, <span class="arithmatex">\(d'_i\)</span>, <span class="arithmatex">\(y_{i+1}\)</span> の3つだけである。これを下の行から順に繰り返す。</figcaption>
+</figure>
 <p>ループは2本だけ、追加の作業配列も2本（<span class="arithmatex">\(c',d'\)</span>）で済む。<span class="arithmatex">\(N\)</span> を大きくしても演算量は <span class="arithmatex">\(N\)</span> に比例して増えるだけなので、撃ち抜き法のような反復も要らず、<strong>境界値問題を1回の直接計算で解ける</strong>。</p>
 <h2 id="sample">サンプルコード</h2>
 <p><a href="../#example-linear">例題1</a> <span class="arithmatex">\(-y''=\pi^2\sin(\pi x)\)</span>, <span class="arithmatex">\(y(0)=y(1)=0\)</span>（厳密解 <span class="arithmatex">\(\sin\pi x\)</span>）を、トーマス法で解く。内点の各行は <span class="arithmatex">\(a_i=-1,\ b_i=2,\ c_i=-1\)</span>、右辺は <span class="arithmatex">\(d_i=h^2 f(x_i)=h^2\pi^2\sin(\pi x_i)\)</span> である（両辺に <span class="arithmatex">\(h^2\)</span> を掛けて整数係数にした）。後半では <span class="arithmatex">\(N\)</span> を倍々にして最大誤差を測り、2次収束を確認する。係数・右辺・解の配列とトーマス法の作業配列 <code>cp</code>・<code>dp</code> は長さが <span class="arithmatex">\(N\)</span> で決まるので、<a href="../../week03/iterative/#malloc"><code>malloc</code></a> で確保する。</p>
@@ -3774,19 +3829,14 @@ y_{n-1} = d'_{n-1}, \qquad y_i = d'_i - c'_i\, y_{i+1}.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python3<span class="w"> </span>plot_fd.py
 </code></pre></div>
 <p>左の灰色の縦線が格子点ごとの誤差で、中央で最大・両端で最小という分布が一目で分かる。右は傾きを最小二乗で測ったもので、<span class="arithmatex">\(2.00\)</span> になる（本文の<a href="#result">収束の図</a>では、ここに撃ち抜き法の傾き4の線も重ねてある）。</p>
-<h2 id="_2">非線形境界値問題への拡張</h2>
-<p>右辺が <span class="arithmatex">\(-y''=f(x,y)\)</span> のように<strong>未知関数 <span class="arithmatex">\(y\)</span> を含む</strong>非線形問題では、離散化した連立方程式</p>
-<div class="arithmatex">\[
-\mathbf F(\mathbf y) = A\mathbf y - \mathbf f(\mathbf y) = \mathbf 0
-\]</div>
-<p>が <span class="arithmatex">\(\mathbf y\)</span> について非線形になる。これは<a href="../../appendix/newton-system/">補足の多変数ニュートン法</a>の出番である。各反復で<strong>ヤコビアン <span class="arithmatex">\(J=\partial\mathbf F/\partial\mathbf y\)</span> を組み、線形系 <span class="arithmatex">\(J\,\Delta\mathbf y=-\mathbf F\)</span> を解く</strong>。ここで <span class="arithmatex">\(A\)</span> は三重対角、<span class="arithmatex">\(\mathbf f(\mathbf y)\)</span> の各成分 <span class="arithmatex">\(f_i\)</span> は <span class="arithmatex">\(y_i\)</span> のみに依存するので <span class="arithmatex">\(\partial f_i/\partial y_j\)</span> は対角である。したがって <strong><span class="arithmatex">\(J=A-\operatorname{diag}(\partial f_i/\partial y_i)\)</span> も三重対角</strong>になり、各ニュートン反復の線形系をふたたびトーマス法で <span class="arithmatex">\(O(n)\)</span> で解ける。第3回（直接法）・補足（多変数ニュートン法）・本回（有限差分）の道具がそのまま組み合わさる。</p>
-<h2 id="_3">まとめ</h2>
+<p>なお右辺が <span class="arithmatex">\(y\)</span> を含む非線形境界値問題では、離散系そのものが非線形になる。扱いは<a href="../../appendix/nonlinear-bvp/">補足: 非線形境界値問題</a>にある。</p>
+<h2 id="_2">まとめ</h2>
 <ul>
 <li><strong>有限差分法</strong>は中心差分 <span class="arithmatex">\(y''(x_i)\approx(y_{i-1}-2y_i+y_{i+1})/h^2\)</span> で境界値問題を<strong>三重対角線形系 <span class="arithmatex">\(A\mathbf y=\mathbf f\)</span></strong> に離散化する。境界値は右辺へ移項する。</li>
 <li>三重対角系は<strong>トーマス法</strong>（前進消去＋後退代入）で <span class="arithmatex">\(O(n)\)</span> で解ける。第3回のガウス消去を疎構造に特化させたものである。</li>
 <li>中心差分は2次精度なので、<span class="arithmatex">\(h\)</span> 半減で誤差が <span class="arithmatex">\(1/4\)</span> になる<strong>2次収束</strong>を示す（例題1で誤差比→4）。</li>
 <li>撃ち抜き法と違い<strong>反復なしの直接解</strong>で、不安定な方程式にも頑健。精度は離散化の次数で決まる。</li>
-<li>非線形境界値問題は離散系が非線形になり、<strong>補足の多変数ニュートン法</strong>でヤコビアン（やはり三重対角）を解く。</li>
+<li>右辺が <span class="arithmatex">\(y\)</span> を含む非線形境界値問題では離散系が非線形になり、<a href="../../appendix/nonlinear-bvp/">補足: 非線形境界値問題</a>の多変数ニュートン法で解く。</li>
 </ul>
 
 
